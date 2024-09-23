@@ -10,13 +10,11 @@ function App() {
 
   useEffect(() => {
     fetchCoursesAsync();
-  }, [fetchCoursesAsync]);
+  }, []);
 
   return (
-    <> 
-      <CognitaProvider>
+    <>
         <Outlet />
-      </CognitaProvider>
     </>
   );
 }

@@ -8,6 +8,9 @@ import { CognitaProvider } from './Context/CognitaContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-      <RouterProvider router={router} />
+        <CognitaProvider>
+          <RouterProvider router={router} />
+        </CognitaProvider>
+    
   </StrictMode>,
 );
