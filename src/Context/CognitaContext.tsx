@@ -1,46 +1,40 @@
-import { createContext, ReactElement, ReactNode, useState } from "react";
-import { ICognitaContext, ICourse } from "../Data/Interface";
-import CognitaData from "../Data/FetchData";
-
-
+import { createContext, ReactElement, ReactNode, useState } from 'react';
+import { ICognitaContext, ICourse } from '../Data/Interface';
+import CognitaData from '../Data/FetchData';
 
 interface ICognitaProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 //
-export const CognitaContext = createContext<ICognitaContext>({} as ICognitaContext);
+export const CognitaContext = createContext<ICognitaContext>(
+  {} as ICognitaContext
+);
 
+export function CognitaProvider({
+  children,
+}: ICognitaProviderProps): ReactElement {
+  const [ Courses, setCourses ] = useState<ICourse[]>(CognitaData);
 
+  const fetchCoursesAsync = async () => {
+    try {
+      const URL = 'https://localhost:7147/api/courses';
+      const response = await fetch(URL);
 
-export function CognitaProvider({ children }: ICognitaProviderProps): ReactElement {
-  
-    const [Courses, setCourses] = useState<ICourse[]>(CognitaData);
-   
-    
-    const fetchCoursesAsync = async () => {
-        try{
-        const URL = "https://localhost:7147/api/courses";
-        const response = await fetch(URL);
+      if (!response.ok) {
+        throw new Error('Couldnt fetch the data');
+      }
 
-        if(!response.ok){
-            throw new Error("Couldnt fetch the data")
-        }
+      const data: ICourse[] = await response.json();
+      setCourses(data);
+      console.log(data);
+    } catch (error) {
+      throw new Error('Failed to fetch course.');
+      console.error('Error fetching random cocktail:', error);
+    }
+  };
 
-        const data:ICourse[] = await response.json();
-        setCourses(data)
-        console.log(data)
-
-        } catch(error ){
-             throw new Error("Failed to fetch course.")
-             console.error("Error fetching random cocktail:", error);
-
-        }
-}
-
-    
-
-    /*const fetchRandomCocktail = async (value: string) => {
+  /*const fetchRandomCocktail = async (value: string) => {
         try {
             const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${value}`);
 
@@ -59,21 +53,12 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
         }
     };*/
 
+  const values: ICognitaContext = {
+    Courses,
+    fetchCoursesAsync,
+  };
 
-   
-    const values: ICognitaContext = {
-        Courses,
-        fetchCoursesAsync
-    }
-    
-
-   
-
-   
-
-    return (
-        <CognitaContext.Provider value={values}>
-            {children}
-        </CognitaContext.Provider>
-    );
+  return (
+    <CognitaContext.Provider value={ values }>{ children }</CognitaContext.Provider>
+  );
 }
