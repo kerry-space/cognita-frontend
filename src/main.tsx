@@ -11,5 +11,10 @@ createRoot(document.getElementById('root')!).render(
     <CognitaProvider>
       <RouterProvider router={ router } />
     </CognitaProvider>
+<<<<<<< HEAD
   </StrictMode>
 );
+=======
+  </StrictMode>,
+);
+>>>>>>> developer
