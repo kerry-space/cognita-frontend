@@ -19,8 +19,8 @@ export function LoginPrompt() {
   };
 
   return (
-    <div className='card login-card'>
-      <div className='login-card-header'>Cognita Learning</div>
+    <div className='card'>
+      <div className='card-header'>Cognita Learning</div>
       <p className='prompt'>Enter your email and password to login</p>
       {isInvalidCreds ? (
         <div className='invalid-container'>
@@ -29,35 +29,33 @@ export function LoginPrompt() {
       ) : null}
       <form onSubmit={onSubmit}>
         <div className='mb-3 wider'>
-          <label htmlFor='email-input' className='form-label login-form-label'>
+          <label htmlFor='email-input' className='form-label'>
             Email
           </label>
           <input
             name='email'
             type='email'
-            className='form-control login-form'
+            className='form-control'
             id='email-input'
             placeholder='m@example.com'
             required
           />
         </div>
         <div className='mb-3 wider'>
-          <label
-            htmlFor='password-input'
-            className='form-label login-form-label'>
+          <label htmlFor='password-input' className='form-label'>
             Password
           </label>
           <input
             name='password'
             minLength={3}
             type='password'
-            className='form-control login-form'
+            className='form-control'
             id='password-input'
             required
           />
         </div>
 
-        <button className='login-btn wider' type='submit'>
+        <button className='btn wider' type='submit'>
           Login
         </button>
       </form>

@@ -1,4 +1,4 @@
-.login-card {
+.login-page .card {
   background-color: var(--light-purple);
   padding-inline: 4rem;
   padding-block: 2rem;
@@ -6,7 +6,7 @@
   justify-content: center;
 }
 
-.login-card-header {
+.login-page .card-header {
   color: var(--main-bg-color);
   font-size: 3rem;
   font-weight: 500;
@@ -15,34 +15,34 @@
   background-color: transparent;
 }
 
-.prompt {
+.login-page .prompt {
   color: var(--main-bg-color);
   font-size: 1.1rem;
   text-align: center;
   margin-bottom: 3rem;
 }
 
-.login-form-label {
+.login-page .form-label {
   color: var(--main-bg-color);
   margin-bottom: 0;
   font-weight: 600;
 }
 
-.wider {
+.login-page .wider {
+  position: relative;
   width: 120%;
-  transform: translateX(-8.5%);
+  right: 10%;
 }
 
-.login-form {
+.login-page .form-control {
   border: 1px solid var(--medium-purple);
 }
 
-.login-form:focus {
-  box-shadow: none;
-  border: 1px solid var(--medium-purple);
+.login-page .form-control:focus {
+  box-shadow: inset 0 0 0 1px var(--sand-beige), 0 0 4px 1px var(--sand-beige);
 }
 
-.login-btn {
+.login-page .btn {
   margin-top: 2rem;
   border: none;
   background-color: var(--medium-purple);
@@ -52,13 +52,17 @@
   font-weight: 600;
 }
 
-.invalid-container {
+.login-page .btn:hover {
+  color: white;
+}
+
+.login-page .invalid-container {
   display: flex;
   justify-content: center;
   position: relative;
 }
 
-.invalid-info {
+.login-page .invalid-info {
   color: var(--salmon-pink);
   position: absolute;
   font-size: 1.3rem;
