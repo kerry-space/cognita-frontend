@@ -1,5 +1,5 @@
+import { LoginPrompt } from '../Components';
 import './LoginPage.css';
-import { LoginPrompt } from '../Components/LoginPrompt';
 
 export function LoginPage() {
   return (
