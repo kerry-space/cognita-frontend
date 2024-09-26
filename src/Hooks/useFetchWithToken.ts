@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   addTokenToRequestInit,
   CustomError,
@@ -6,8 +6,8 @@ import {
   ITokens,
   refreshTokens,
   TOKENS,
-} from "../utils";
-import { useLocalStorage } from "usehooks-ts";
+} from '../utils';
+import { useLocalStorage } from 'usehooks-ts';
 
 interface IUseFetchWithTokenReturn<T> {
   data: T | null;
@@ -27,7 +27,10 @@ export function useFetchWithToken<T>(
 
   // This function is generated based on the parameters to the useFetchWithToken and it's used internally by the requestFunc.
   async function generatedFetch<T>(accessToken: string): Promise<T> {
-    const requestInit: RequestInit = addTokenToRequestInit(accessToken, options);
+    const requestInit: RequestInit = addTokenToRequestInit(
+      accessToken,
+      options
+    );
     const response: Response = await fetch(url, requestInit);
 
     if (response.ok === false) {
@@ -45,19 +48,19 @@ export function useFetchWithToken<T>(
 
     if (tokenIsExpired) {
       // Ask api to refresh token before fetching the data.
-      console.log("Token is expired:", tokenIsExpired);
+      console.log('Token is expired:', tokenIsExpired);
 
-      await refreshTokens(tokens!.accessToken, tokens!.refreshToken)
-        .then(async (refreshedTokens) => {
+      await refreshTokens(tokens!)
+        .then(async refreshedTokens => {
           setTokens(refreshedTokens);
           return await generatedFetch<T>(refreshedTokens.accessToken);
         })
-        .then((data) => {
+        .then(data => {
           if (data) {
             setData(data);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           if (error instanceof CustomError) {
             setError(error);
           }
@@ -69,12 +72,12 @@ export function useFetchWithToken<T>(
       // Just fetch the data right away
 
       await generatedFetch<T>(tokens!.accessToken)
-        .then((data) => {
+        .then(data => {
           if (data) {
             setData(data);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           if (error instanceof CustomError) {
             setError(error);
           }

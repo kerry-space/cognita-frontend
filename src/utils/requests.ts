@@ -21,12 +21,11 @@ export async function loginReq({
   return (await response.json()) as ITokens;
 }
 
-export async function refreshTokens(
-  accessToken: string,
-  refreshToken: string
-): Promise<ITokens> {
-  //TODO Update this URL according to our Cognita API refresh token endpoint
-  const url: string = `${BASE_URL}/token/refresh`;
+export async function refreshTokens({
+  accessToken,
+  refreshToken,
+}: ITokens): Promise<ITokens> {
+  const url: string = `${BASE_URL}/authentication/refresh`;
 
   const response: Response = await fetch(url, {
     method: 'POST',
@@ -34,8 +33,8 @@ export async function refreshTokens(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      accessToken,
+      refreshToken,
     }),
   });
 
