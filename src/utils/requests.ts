@@ -51,7 +51,10 @@ export async function refreshTokens({
     );
   }
   if (!response.ok) {
-    throw new CustomError(response.status, 'Refreshtoken seem to have expired');
+    throw new CustomError(
+      response.status,
+      'Seomthing went wrong with refreshToken request'
+    );
   }
 
   return (await response.json()) as ITokens;
