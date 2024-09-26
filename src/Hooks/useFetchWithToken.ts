@@ -4,6 +4,7 @@ import {
   CustomError,
   hasTokenExpired,
   ITokens,
+  RefreshTokenError,
   refreshTokens,
   TOKENS,
 } from '../utils';
@@ -22,7 +23,10 @@ export function useFetchWithToken<T>(
 ): IUseFetchWithTokenReturn<T> {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [tokens, setTokens] = useLocalStorage<ITokens | null>(TOKENS, null);
+  const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
+    TOKENS,
+    null
+  );
   const [error, setError] = useState<CustomError | null>(null);
 
   // This function is generated based on the parameters to the useFetchWithToken and it's used internally by the requestFunc.
@@ -61,6 +65,10 @@ export function useFetchWithToken<T>(
           }
         })
         .catch(error => {
+          if (error instanceof RefreshTokenError) {
+            console.log(error);
+            clearTokens();
+          }
           if (error instanceof CustomError) {
             setError(error);
           }

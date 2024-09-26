@@ -1,4 +1,10 @@
-import { BASE_URL, CustomError, ILoginCredentials, ITokens } from '.';
+import {
+  BASE_URL,
+  CustomError,
+  ILoginCredentials,
+  ITokens,
+  RefreshTokenError,
+} from '.';
 
 export async function loginReq({
   userName,
@@ -38,11 +44,14 @@ export async function refreshTokens({
     }),
   });
 
-  if (response.ok === false) {
-    throw new CustomError(
+  if (response.status === 400) {
+    throw new RefreshTokenError(
       response.status,
-      'Something went wrong with refresh token'
+      'Refreshtoken seem to have expired'
     );
+  }
+  if (!response.ok) {
+    throw new CustomError(response.status, 'Refreshtoken seem to have expired');
   }
 
   return (await response.json()) as ITokens;
