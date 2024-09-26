@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
 import './LoginPrompt.css';
+import { useAuthContext } from '../../Hooks';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginPrompt() {
+  const { login } = useAuthContext();
   const [isInvalidCreds, setIsInvalidCreds] = useState(false);
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = e => {
+  const navigate = useNavigate();
+
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const formDetails = Object.fromEntries(formData) as {
-      email: string;
+      userName: string;
       password: string;
     };
-    console.log(formDetails);
-    //TODO
-    // Send email and password to backend for validation and navigate to home if success.
-
-    //If incorrect credentials
-    setIsInvalidCreds(true);
+    try {
+      await login(formDetails).then(() => {
+        console.log('login success..');
+        navigate('/');
+      });
+    } catch (err) {
+      console.log(err);
+      setIsInvalidCreds(true);
+    }
   };
 
   return (
@@ -33,7 +41,9 @@ export function LoginPrompt() {
             Email
           </label>
           <input
-            name='email'
+            //The 'name' attr below sets the attr name that comes out from the form which we send
+            // to backend login endpoint and the backend login endpoint takes the attr name "userName"
+            name='userName'
             type='email'
             className='form-control'
             id='email-input'
@@ -54,7 +64,10 @@ export function LoginPrompt() {
             required
           />
         </div>
-
+        {/* This hidden input is to catch an enter-press when user has any of the inputs focused 
+        (i.e finished typing its password). If this is not present, when user presses enter the form
+        is submitted anyways but user is not redirected, SUPERWEIRD! */}
+        <input type='submit' className='d-none' />
         <button className='btn wider' type='submit'>
           Login
         </button>
