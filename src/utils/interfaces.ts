@@ -13,3 +13,11 @@ export interface ILoginCredentials {
   userName: string;
   password: string;
 }
+
+export interface IUser {
+  id: number;
+  role: 'Teacher' | 'Student';
+  email: string;
+  course: string;
+  name: string;
+}

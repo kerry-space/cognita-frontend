@@ -1,0 +1,10 @@
+.user-mgmt-page .container {
+  background-color: var(--light-purple);
+  border-radius: 1rem;
+  padding: 3rem;
+}
+
+.user-mgmt-page .header {
+  font-weight: 700;
+  font-size: 3rem;
+}
