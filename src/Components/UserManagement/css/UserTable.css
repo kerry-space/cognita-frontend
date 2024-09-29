@@ -1,0 +1,28 @@
+.user-table .table-cell {
+  background-color: var(--light-purple);
+}
+
+.user-table .column-header {
+  font-size: 1.1rem;
+}
+
+.user-table .edit-btn {
+  background-color: white;
+  border-radius: 10px;
+  padding-inline: 1.5rem;
+  padding-block: 0.5rem;
+  border: none;
+}
+.user-table .delete-btn {
+  background-color: red;
+  border-radius: 10px;
+  padding-inline: 1.5rem;
+  padding-block: 0.5rem;
+  border: none;
+  color: white;
+}
+
+.user-table .btn-container {
+  display: flex;
+  gap: 10px;
+}
