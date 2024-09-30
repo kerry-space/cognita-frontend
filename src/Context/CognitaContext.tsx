@@ -3,7 +3,7 @@ import { ICognitaContext, ICourse } from "../Data/Interface";
 import CognitaDataStorage from "../Data/DataStorage";
 
 interface ICognitaProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 export const CognitaContext = createContext<ICognitaContext>({} as ICognitaContext);
@@ -16,19 +16,21 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
 
     // Fetch courses asynchronously from an API
     const fetchCoursesAsync = async () => {
-        try {
-            const URL = "https://localhost:7147/api/courses";
-            const response = await fetch(URL);
-
-            if (!response.ok) {
-                throw new Error("Couldn't fetch the data");
-            }
-
-            const data: ICourse[] = await response.json();
-            setCourses(data);
-        } catch (error) {
-            console.error("Failed to fetch courses:", error);
+      try {
+        const URL = 'https://localhost:7147/api/courses';
+        const response = await fetch(URL);
+  
+        if (!response.ok) {
+          throw new Error('Couldnt fetch the data');
         }
+  
+        const data: ICourse[] = await response.json();
+        setCourses(data);
+        console.log(data);
+      } catch (error) {
+        throw new Error('Failed to fetch course.');
+        console.error('Error fetching random cocktail:', error);
+      }
     };
 
     // Find a course by its CourseId
@@ -136,3 +138,7 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
         </CognitaContext.Provider>
     );
 }
+
+
+
+

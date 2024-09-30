@@ -1,0 +1,11 @@
+:root {
+  --main-bg-color: #2c1a4d;
+  --light-purple: #f0ebfa;
+  --sand-beige: #e6d9a2;
+  --salmon-pink: #cb80ab;
+  --medium-purple: rgb(184, 161, 224);
+}
+
+* {
+  font-family: 'Times New Roman', Times, serif;
+}
