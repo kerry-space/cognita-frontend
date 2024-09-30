@@ -2,7 +2,7 @@ import React from 'react';
 import './css/UsermanagementUI.css';
 import { users as dummyUsers } from './DummyData';
 import { UserTable, SearchInput } from '.';
-import _ from "lodash";
+import _ from 'lodash';
 import { IUser } from '../../utils';
 
 export function UserManagementUI() {
@@ -10,15 +10,19 @@ export function UserManagementUI() {
   const [filteredUsers, setFilteredUsers] = React.useState<IUser[]>(dummyUsers);
 
   const onSearchChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-    setFilteredUsers(users.filter(u => u.name.toLocaleLowerCase().includes(e.target.value.toLowerCase()) || u.email.toLocaleLowerCase().includes(e.target.value.toLowerCase())))
+    setFilteredUsers(
+      users.filter(
+        u =>
+          u.name.toLocaleLowerCase().includes(e.target.value.toLowerCase()) ||
+          u.email.toLocaleLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
   };
 
-  const debouncedSearch = _.debounce(
-    onSearchChange, 300
-  )
+  const debouncedSearch = _.debounce(onSearchChange, 300);
 
   React.useEffect(() => {
-    // Fetch users from backend and set them as the useState "users", then do the same for filteredUsers 
+    // Fetch users from backend and set them as the useState "users", then do the same for filteredUsers
   }, []);
 
   return (
@@ -28,7 +32,11 @@ export function UserManagementUI() {
         <SearchInput onSearchChange={debouncedSearch} />
         <button className='add-user-btn'>Add user</button>
       </div>
-      <UserTable data={filteredUsers} editClick={() => {}} deleteClick={() => {}} />
+      <UserTable
+        data={filteredUsers}
+        editClick={() => {}}
+        deleteClick={() => {}}
+      />
     </div>
   );
 }

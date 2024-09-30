@@ -32,3 +32,20 @@
 .user-table .empty-filler {
   height: 40px;
 }
+
+.user-table .header-role {
+  width: 10%;
+}
+.user-table .header-name {
+  width: 20%;
+}
+.user-table .header-email {
+  width: 30%;
+}
+.user-table .header-course {
+  width: 20%;
+}
+.user-table .header-actions {
+  width: 20%;
+  text-align: center;
+}
