@@ -1,0 +1,44 @@
+.course-detail-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  font-family: Arial, sans-serif; /* Ensure the font matches */
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: add shadow for depth */
+}
+
+.course-info, .participants {
+  flex: 1;
+  margin-right: 20px;
+  padding: 10px;
+}
+
+.modules {
+  width: 100%;
+  margin-top: 20px; /* Space between modules and top content */
+}
+
+/* Add specific styles for buttons and other elements as seen in Image 1 */
+.button {
+  background-color: #4a4e69;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Specific adjustments for module and activity listings */
+.module-item, .activity-item {
+  background-color: #f4f4f4;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}

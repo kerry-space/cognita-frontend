@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { ICourse } from "./Interface";
 
 
-const CognitaData: ICourse[] = [
+const CognitaDataStorage: ICourse[] = [
     {
       CourseId: 1,
       CourseName: 'TypeScript Mastery',
@@ -111,7 +111,7 @@ const CognitaData: ICourse[] = [
     },
   ];
   
-  export default CognitaData;
+  export default CognitaDataStorage;
 
 
 

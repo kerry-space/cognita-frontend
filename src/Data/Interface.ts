@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 
 
  export interface ICourse{
@@ -6,7 +7,7 @@
     Description: string;
     StartDate: Date;
     EndDate: Date;
-    modules: IModule[];
+    modules?: IModule[];
 
  }
 
@@ -39,14 +40,22 @@ export interface IActivityType{
 }
 
 
- export interface ICognitaContext {
-    Courses: ICourse[];
-
-    fetchCoursesAsync:  () => void;
-    
-    //fetchRandomCocktail: (value : string) => Promise<void>;
-   // advancedSearchCocktails: ((params: { name?: string, category?: string, ingredient?: string, glass?: string }) => Promise<ICocktail[]>);
-  
+export interface ICognitaContext {
+   Courses: ICourse[];
+   showEditModal: boolean;
+   setShowEditModal: React.Dispatch<React.SetStateAction<boolean>>;
+   currentCourse: ICourse | null;
+   setCurrentCourse: (course: ICourse | null) => void;
+   modalState: { show: boolean; content: string | null }
+   setModalState: Dispatch<SetStateAction<{ show: boolean; content: string | null; }>>;
+   fetchCoursesAsync: () => void;
+   handleAddCourseClick: () => void;
+   handleEditClick: (course: ICourse) => void;
+   handleCloseModal: () => void;
+   handleSaveCourse: (updatedCourse: ICourse) => void;
+   calculateWeekStatus: (course: ICourse) => { weeks: number; status: string; startDate: string; endDate: string };
+   findCourseById: (courseId: number) => ICourse | null; 
+   handleShowModal: (content: string) => void;
 }
 
 
