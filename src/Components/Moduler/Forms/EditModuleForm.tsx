@@ -1,6 +1,6 @@
 // EditModuleForm.js
 import React, { useState } from 'react';
-import { IModule } from '../../Data/Interface';
+import { IModule } from '../../../Data/Interface';
 
 interface EditModuleFormProps {
   module: IModule;

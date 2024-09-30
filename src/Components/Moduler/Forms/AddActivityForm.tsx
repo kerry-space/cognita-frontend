@@ -1,6 +1,6 @@
 // AddActivityForm.js
 import React, { useState } from 'react';
-import { IActivity } from '../../Data/Interface';
+import { IActivity } from '../../../Data/Interface';
 
 interface AddActivityFormProps {
   onSave: (activity: IActivity) => void;

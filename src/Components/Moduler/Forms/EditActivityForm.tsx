@@ -1,6 +1,6 @@
 // EditActivityForm.tsx
 import React, { useState } from 'react';
-import { IActivity } from '../../Data/Interface';
+import { IActivity } from '../../../Data/Interface';
 
 interface EditActivityFormProps {
   activity: IActivity;

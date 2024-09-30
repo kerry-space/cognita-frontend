@@ -1,36 +1,44 @@
 import React, { useState } from 'react';
-import { ICourse, IModule } from '../../Data/Interface';
+import { ICourse, IModule, IActivity } from '../../Data/Interface';
 import GenericModal from '../GenericModal';
-import { useCognitaFunc } from '../../Hooks/useCognitaFunc';
-import { EditModuleForm, AddActivityForm, EditActivityForm } from './Forms'; // Ensure these are correctly imported
+import { EditModuleForm } from './Forms/AddModuleForm';
+import { AddActivityForm } from './Forms/AddActivityForm';
+import Edi
+import { EditActivityForm } from './Forms/EditActivityForm';
 
-interface ModuleProps{
-  course: ICourse
-}
-
-function Module({ course }: ModuleProps) {
+function Module({ course }) {
   const { setShowEditModal, showEditModal, handleEditClick } = useCognitaFunc();
   const [currentModule, setCurrentModule] = useState(null);
+  const [currentActivity, setCurrentActivity] = useState(null);
   const [modalContent, setModalContent] = useState('');
 
-  const showModal = (content, module = null) => {
+  const showModal = (content, module = null, activity = null) => {
     setModalContent(content);
     setCurrentModule(module);
+    setCurrentActivity(activity);
     setShowEditModal(true);
   };
 
   return (
     <>
       <div className="module-header">
-        <h2>Module: {course.CourseName}</h2>
+        <h2>{course.CourseName}</h2>
         <button onClick={() => showModal('addModule')}>Add Module</button>
       </div>
       {course.modules?.map((mod) => (
         <div key={mod.ModuleId} className="module-container">
-          <h4>{mod.ModuleName}</h4>
-          <div>
+          <div className="module-details">
+            <h4>{mod.ModuleName}</h4>
             <button onClick={() => showModal('editModule', mod)}>Edit Module</button>
             <button onClick={() => showModal('addActivity', mod)}>Add Activity</button>
+            {mod.activities?.map(act => (
+              <div key={act.ActivityId} className="activity-details">
+                <p>{act.Name}</p>
+                <button onClick={() => showModal('editActivity', mod, act)}>Edit Activity</button>
+                <button onClick={() => console.log('Upload')}>Upload Documents</button>
+                <button onClick={() => console.log('View')}>View Documents</button>
+              </div>
+            ))}
           </div>
         </div>
       ))}
@@ -38,7 +46,7 @@ function Module({ course }: ModuleProps) {
       <GenericModal
         show={showEditModal}
         handleClose={() => setShowEditModal(false)}
-        title={getTitle(modalContent)}
+        title={modalContent.includes('Module') ? 'Edit Module' : modalContent.includes('Activity') ? 'Edit Activity' : 'Add Activity'}
         handleSave={() => console.log('Saving data')}
       >
         {modalContent === 'editModule' && <EditModuleForm module={currentModule} />}
@@ -47,16 +55,6 @@ function Module({ course }: ModuleProps) {
       </GenericModal>
     </>
   );
-}
-
-// Additional helper functions
-function getTitle(modalContent) {
-  switch(modalContent) {
-    case 'editModule': return "Edit Module";
-    case 'addActivity': return "Add Activity";
-    case 'editActivity': return "Edit Activity";
-    default: return "";
-  }
 }
 
 function handleActivitySave(activity) {
