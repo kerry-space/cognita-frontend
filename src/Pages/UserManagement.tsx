@@ -1,4 +1,3 @@
-import React from 'react';
 import './UserManagement.css';
 import { UserManagementUI } from '../Components/UserManagement';
 

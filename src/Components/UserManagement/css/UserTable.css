@@ -1,9 +1,10 @@
-.user-table .table-cell {
-  background-color: var(--light-purple);
-}
-
 .user-table .column-header {
   font-size: 1.1rem;
+}
+
+.user-table .table-cell {
+  background-color: var(--light-purple);
+  vertical-align: middle;
 }
 
 .user-table .edit-btn {
@@ -25,4 +26,9 @@
 .user-table .btn-container {
   display: flex;
   gap: 10px;
+  justify-content: flex-end;
+}
+
+.user-table .empty-filler {
+  height: 40px;
 }
