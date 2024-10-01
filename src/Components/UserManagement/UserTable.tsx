@@ -98,9 +98,17 @@ export function UserTable({ editClick, deleteClick, data }: IUserTableProps) {
         </tbody>
       </table>
       <div className='d-flex w-100 justify-content-center align-items-center'>
-        <button onClick={() => paginate(-1)}>{'<'}</button>
-        <p className='mb-0'>{`${activePage + 1} (${paginatedData.length})`}</p>
-        <button onClick={() => paginate(1)}>{'>'}</button>
+        <span className='pagination-container d-flex align-items-center'>
+          <button className='pagination-btn' onClick={() => paginate(-1)}>
+            {'<'}
+          </button>
+          <p className='mb-0 pagination-numbers'>{`${activePage + 1} (${
+            paginatedData.length
+          })`}</p>
+          <button className='pagination-btn' onClick={() => paginate(1)}>
+            {'>'}
+          </button>
+        </span>
       </div>
     </>
   );

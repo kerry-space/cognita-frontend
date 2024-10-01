@@ -43,9 +43,26 @@
   width: 30%;
 }
 .user-table .header-course {
-  width: 20%;
+  width: 10%;
 }
 .user-table .header-actions {
   width: 20%;
   text-align: center;
+}
+
+.user-mgmt-page .pagination-container {
+  background-color: var(--main-bg-color);
+  padding: 0.3rem;
+  border-radius: 10px;
+  gap: 5px;
+}
+
+.user-mgmt-page .pagination-btn {
+  background-color: transparent;
+  color: white;
+}
+
+.user-mgmt-page .pagination-numbers {
+  background-color: transparent;
+  color: white;
 }
