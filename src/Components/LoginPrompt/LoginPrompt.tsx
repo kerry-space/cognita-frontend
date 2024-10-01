@@ -16,10 +16,14 @@ export function LoginPrompt() {
       password: string;
     };
     try {
-      await login(formDetails).then(() => {
-        console.log('login success..');
-        navigate('/');
-      });
+      await login(formDetails);
+      console.log('login success..');
+      //The useEffect in AuthContext which sets isLoggedIn state is not run in time
+      //for the 'navigate('/')' call below to work. It only works on the second try when
+      //the token cookie is already set. This 10ms timeout solves this problem. Not the most elegant
+      //solution but the only one I can think of right now without messing around with Niclas's code.
+      await new Promise(resolve => setTimeout(resolve, 10));
+      navigate('/');
     } catch (err) {
       console.log(err);
       setIsInvalidCreds(true);
@@ -64,10 +68,6 @@ export function LoginPrompt() {
             required
           />
         </div>
-        {/* This hidden input is to catch an enter-press when user has any of the inputs focused 
-        (i.e finished typing its password). If this is not present, when user presses enter the form
-        is submitted anyways but user is not redirected, SUPERWEIRD! */}
-        <input type='submit' className='d-none' />
         <button className='btn wider' type='submit'>
           Login
         </button>
