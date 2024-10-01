@@ -5,13 +5,25 @@ import './css/UserTable.css';
 
 const usersPerPage = 8;
 
+const getRole = (arg: '' | 0 | 1) => {
+  switch (arg) {
+    case '':
+      return '';
+    case 0:
+      return 'Teacher';
+    case 1:
+      return 'Student';
+    default:
+      break;
+  }
+};
+
 const createTableFiller = (lastPageLength: number) =>
   new Array(usersPerPage - lastPageLength).fill({
-    id: '',
     role: '',
     name: '',
     email: '',
-    course: '',
+    courseName: '',
   });
 
 interface IUserTableProps {
@@ -22,7 +34,7 @@ interface IUserTableProps {
 
 export function UserTable({ editClick, deleteClick, data }: IUserTableProps) {
   const paginatedData =
-    data.length === 0
+    data?.length === 0
       ? [createTableFiller(0)]
       : _.chunk(data, usersPerPage)
           //Fill last page with empty data to make table always have the same height
@@ -69,14 +81,14 @@ export function UserTable({ editClick, deleteClick, data }: IUserTableProps) {
           </tr>
         </thead>
         <tbody>
-          {paginatedData[activePage]?.map((user, idx) => (
+          {paginatedData[activePage]?.map((user: IUser, idx) => (
             <tr key={idx}>
-              <td className='table-cell role-cell'>{user.role}</td>
+              <td className='table-cell role-cell'>{getRole(user.role)}</td>
               <td className='table-cell'>{user.name}</td>
               <td className='table-cell'>{user.email}</td>
-              <td className='table-cell'>{user.course}</td>
+              <td className='table-cell'>{user.courseName}</td>
               <td className='table-cell btn-container'>
-                {user.id ? (
+                {user.email ? (
                   <>
                     <button
                       className='edit-btn'
@@ -85,7 +97,9 @@ export function UserTable({ editClick, deleteClick, data }: IUserTableProps) {
                     </button>
                     <button
                       className='delete-btn'
-                      onClick={() => deleteClick(user.id)}>
+                      //TODO Pass something to identify user with to cofirm deletion modal and
+                      //then to backend for deletion
+                      onClick={() => deleteClick(2)}>
                       Delete
                     </button>
                   </>

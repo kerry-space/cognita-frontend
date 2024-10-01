@@ -1,14 +1,14 @@
 import React from 'react';
 import './css/UsermanagementUI.css';
-import { users as dummyUsers } from './DummyData';
 import { UserTable, SearchInput } from '.';
 import _ from 'lodash';
-import { IUser } from '../../utils';
+import { BASE_URL, IUser } from '../../utils';
+import { useFetchWithToken } from '../../Hooks';
 
 export function UserManagementUI() {
-  const [users, setUsers] = React.useState<IUser[]>(dummyUsers);
-  const [filteredUsers, setFilteredUsers] = React.useState<IUser[]>(dummyUsers);
-
+  const [users, setUsers] = React.useState<IUser[]>([]);
+  const [filteredUsers, setFilteredUsers] = React.useState<IUser[]>([]);
+  const { data, requestFunc } = useFetchWithToken(`${BASE_URL}/users`);
   const onSearchChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     setFilteredUsers(
       users.filter(
@@ -19,10 +19,14 @@ export function UserManagementUI() {
     );
   };
 
-  const debouncedSearch = _.debounce(onSearchChange, 300);
+  const debouncedSearch = _.debounce(onSearchChange, 400);
 
   React.useEffect(() => {
-    // Fetch users from backend and set them as the useState "users", then do the same for filteredUsers
+    requestFunc().then(() => {
+      setUsers(data as IUser[]);
+      setFilteredUsers(data as IUser[]);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

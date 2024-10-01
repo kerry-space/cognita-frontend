@@ -18,7 +18,7 @@ export function LoginPrompt() {
     try {
       await login(formDetails).then(() => {
         console.log('login success..');
-        navigate('/');
+        navigate('/user-management');
       });
     } catch (err) {
       console.log(err);

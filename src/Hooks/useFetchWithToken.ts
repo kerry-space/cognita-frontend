@@ -14,7 +14,7 @@ interface IUseFetchWithTokenReturn<T> {
   data: T | null;
   error: CustomError | null;
   isLoading: boolean;
-  requestFunc: () => void;
+  requestFunc: () => Promise<void>;
 }
 
 export function useFetchWithToken<T>(
