@@ -2,15 +2,12 @@ import { Dispatch, SetStateAction } from "react";
 
 
  export interface ICourse{
-    CourseId: number;
-    CourseName: string;
-    Description: string;
-    StartDate: Date;
-    EndDate: Date;
-    modules?: IModule[];
-
+   courseId: number;
+   courseName: string;
+    description: string ;
+    endDate: string | Date ;
+    startDate: string | Date;
  }
-
 
 
  export interface IModule{
@@ -42,19 +39,20 @@ export interface IActivityType{
 
 export interface ICognitaContext {
    Courses: ICourse[];
-   showEditModal: boolean;
-   setShowEditModal: React.Dispatch<React.SetStateAction<boolean>>;
    currentCourse: ICourse | null;
    setCurrentCourse: (course: ICourse | null) => void;
-   modalState: { show: boolean; content: string | null }
-   setModalState: Dispatch<SetStateAction<{ show: boolean; content: string | null; }>>;
+
+
    fetchCoursesAsync: () => void;
    handleAddCourseClick: () => void;
-   handleEditClick: (course: ICourse) => void;
-   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-   handleCloseModal: () => void;
-   handleSaveCourse: (updatedCourse: ICourse) => void;
-   calculateWeekStatus: (course: ICourse) => { weeks: number; status: string; startDate: string; endDate: string };
+   calculateWeekStatus: (course: ICourse) => { weeks: number; status: string; startDate:  string | Date; endDate: string | Date };
+   handleSaveCourse: (currentCourse: ICourse) => void;
+   
+   openModal: (content: string, course: ICourse | null) => void; 
+   closeModal: () => void;
+   modalState: { show: boolean; content: string | null };
+
+   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>)  => void;
    findCourseById: (courseId: number) => ICourse | null; 
    handleShowModal: (content: string) => void;
 }

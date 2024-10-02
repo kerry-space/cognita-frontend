@@ -1,6 +1,8 @@
-import { createContext, ReactElement, ReactNode, useState } from "react";
+import { createContext, ReactElement, ReactNode, SetStateAction, useState } from "react";
 import { ICognitaContext, ICourse } from "../Data/Interface";
 import CognitaDataStorage from "../Data/DataStorage";
+import { useFetchWithToken } from "../Hooks";
+import { BASE_URL } from "../utils";
 
 interface ICognitaProviderProps {
   children: ReactNode;
@@ -9,25 +11,32 @@ interface ICognitaProviderProps {
 export const CognitaContext = createContext<ICognitaContext>({} as ICognitaContext);
 
 export function CognitaProvider({ children }: ICognitaProviderProps): ReactElement {
-    const [Courses, setCourses] = useState<ICourse[]>(CognitaDataStorage);
+    const [Courses, setCourses] = useState<ICourse[]>([]);
+    const [createdCourse, setcreatedCourse] = useState<ICourse | null>(null);
+    
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [currentCourse, setCurrentCourse] = useState<ICourse | null>(null);
     const [modalState, setModalState] = useState<{ show: boolean; content: string | null }>({ show: false, content: null });
+    
+    
+    //Crud backend 
+    const { requestFunc:fetchCourses } = useFetchWithToken<ICourse[]>(
+        `${BASE_URL}/courses`
+      );
+
+     
+
 
     // Fetch courses asynchronously from an API
     const fetchCoursesAsync = async () => {
       try {
         
-        const URL = 'https://localhost:7147/api/courses';
-        const response = await fetch(URL);
-  
-        if (!response.ok) {
-          throw new Error('Couldnt fetch the data');
-        }
-  
-        const data: ICourse[] = await response.json();
-        setCourses(data);
+        const data  = await fetchCourses();
         console.log(data);
+        if(data)
+        setCourses(data)
+        console.log("courseset: "+ Courses)
+       
       } catch (error) {
         throw new Error('Failed to fetch course.');
         console.error('Error fetching random cocktail:', error);
@@ -36,63 +45,90 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
 
     // Find a course by its CourseId
     const findCourseById = (courseId: number): ICourse | null => {
-        const course = Courses.find((course) => course.CourseId === courseId);
+        const course = Courses.find((course) => course.courseId === courseId);
         return course || null; // Return null if no course is found
     };
 
-    // Handle adding a new course
-    const handleAddCourseClick = (): void => {
-        const newCourse: ICourse = {
-            CourseId: 0, // We'll assign an ID later
-            CourseName: "",
-            Description: "",
-            StartDate: new Date(),
-            EndDate: new Date(),
-            modules: [] // Empty array initially
-        };
-        setCurrentCourse(newCourse);
-        setShowEditModal(true);
-    };
 
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = event.target;
-        
-        if (currentCourse) {
-            // Update the current course state
-            setCurrentCourse({ ...currentCourse, [name]: value });
+      const { name, value } = event.target;
+  
+      // Check if currentCourse exists and update it with new values
+      if (currentCourse) {
+          setCurrentCourse({ ...currentCourse, [name]: value });
+      }
+  };
+
+
+
+
+  const handleAddCourseClick = (): void => {
+    const newCourse: ICourse = {
+        courseId: 0,  // New course should have courseId 0 or null
+        courseName: "",  // Ensure this key matches the form's 'name' attribute
+        description: "",
+        startDate: new Date().toISOString().substring(0, 10),  // Default to current date
+        endDate: new Date().toISOString().substring(0, 10),    // Default to current date
+    };
+    setCurrentCourse(newCourse);  // Set the new course as the current course
+    openModal('Add Course', newCourse);  // Pass the new course to the modal
+};
+
+    
+const openModal = (content: string, course: ICourse | null = null) => {
+  if (!course) {
+      // If no course is provided, assume it's the "Add Course" case and set an empty course
+      const newCourse: ICourse = {
+          courseId: 0,
+          courseName: "",
+          description: "",
+          startDate: new Date().toISOString().substring(0, 10),
+          endDate: new Date().toISOString().substring(0, 10),
+      };
+      setCurrentCourse(newCourse);
+  } else {
+      setCurrentCourse(course);  // Set course for editing
+  }
+  setModalState({ show: true, content });
+};
+
+    // Handle closing the modal
+    const closeModal = () => {
+        setModalState({ show: false, content: null });
+    };
+
+
+
+    const handleSaveCourse = async (currentCourse: ICourse): Promise<void> => {
+        const requestOptions: RequestInit = {
+          method: currentCourse.courseId === 0 ? 'POST' : 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentCourse)
+        };
+      
+        try {
+          const url = currentCourse.courseId === 0
+            ? `${BASE_URL}/courses`  // POST (Create new course)
+            : `${BASE_URL}/courses/${currentCourse.courseId}`;  // PUT (Update existing course)
+      
+          const response = await fetch(url, requestOptions);
+          if (!response.ok) {
+            throw new Error(`Failed to ${currentCourse.courseId === 0 ? 'create' : 'update'} the course`);
+          }
+      
+          // Optionally fetch updated course list
+          fetchCoursesAsync();
+          closeModal();
+        } catch (error) {
+          console.error('Error saving course:', error);
         }
-    };
-
-    // Handles when the edit icon is clicked
-    const handleEditClick = (course:ICourse): void => {
-        setShowEditModal(true); // Show the modal for editing
-        setCurrentCourse(course);
-    };
-
-    // Close the modal
-    const handleCloseModal = (): void => {
-        setShowEditModal(false);
-    };
-
-    // Handle saving a course (add or edit)
-    const handleSaveCourse = (updatedCourse: ICourse): void => {
-        if (updatedCourse.CourseId === 0) {
-            // This is a new course, generate a new CourseId and add to Courses
-            const newCourseId = Courses.length > 0 ? Courses[Courses.length - 1].CourseId + 1 : 1;
-            updatedCourse.CourseId = newCourseId;
-            setCourses([...Courses, updatedCourse]); // Add the new course to the list
-        } else {
-            // This is an edit, update the existing course
-            setCourses(Courses.map((course) => (course.CourseId === updatedCourse.CourseId ? updatedCourse : course)));
-        }
-        setShowEditModal(false); // Close the modal
-    };
+      };
 
     // Calculate weeks and status for the course
     const calculateWeekStatus = (course: ICourse) => {
-        const startDate = new Date(course.StartDate);
-        const endDate = new Date(course.EndDate);
+        const startDate = new Date(course.startDate);
+        const endDate = new Date(course.endDate);
         const diffInMilliseconds = endDate.getTime() - startDate.getTime();
         const weeks = Math.ceil(diffInMilliseconds / (7 * 24 * 60 * 60 * 1000)); // Convert milliseconds to weeks
 
@@ -107,15 +143,15 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
         return {
             weeks,
             status,
-            startDate: formatDate(startDate),
-            endDate: formatDate(endDate)
+            startDate: course.startDate,
+            endDate: course.endDate
         };
     };
 
-    // Format date with dashes (YYYY-MM-DD)
-    const formatDate = (date: Date) => {
-        return date.toISOString().split('T')[0]; // This will give you 'YYYY-MM-DD'
-    };
+  
+
+
+
 
       // Handle showing the document modal
   const handleShowModal = (content: string) => {
@@ -125,22 +161,23 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
     // Provide values and functions via the context
     const values: ICognitaContext = {
         Courses,
-        showEditModal,
-        setShowEditModal,
         currentCourse,
         setCurrentCourse,
-        modalState,
-        setModalState,
 
         fetchCoursesAsync,
         handleAddCourseClick,
-        handleEditClick,
-        handleInputChange,
-        handleCloseModal,
-        handleSaveCourse,
         calculateWeekStatus,
+        handleSaveCourse,
+
+        openModal,
+        closeModal,
+        modalState,
+
+        handleInputChange,
         findCourseById,
         handleShowModal,
+        
+
         
     };
 
@@ -150,6 +187,7 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
         </CognitaContext.Provider>
     );
 }
+
 
 
 

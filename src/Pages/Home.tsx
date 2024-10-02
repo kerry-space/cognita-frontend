@@ -7,18 +7,26 @@ import { ICourse } from '../Data/Interface';
 import "./Home.css";
 
 export function Home(): ReactElement {
-  const { Courses, showEditModal, currentCourse, fetchCoursesAsync, handleEditClick, handleAddCourseClick, handleCloseModal, handleSaveCourse } = useCognitaFunc();
+  const { 
+    Courses, 
+    modalState, 
+    currentCourse, 
+    fetchCoursesAsync, 
+    openModal, 
+    closeModal, 
+    handleSaveCourse, 
+    handleAddCourseClick 
+  } = useCognitaFunc();
 
   useEffect(() => {
-    fetchCoursesAsync(); // Fetch courses asynchronously
+    fetchCoursesAsync();
   }, []);
 
   return (
     <div className="container mt-5">
       <div className="container course-title">
         <h1 className="text-center mb-4">Available Courses</h1>
-        {/* Click to add a new course */}
-        <button className="addButton" onClick={() => handleAddCourseClick()}>
+        <button className="addButton" onClick={handleAddCourseClick}>
           <i className="bi bi-plus-circle-fill icon"></i> Add Course
         </button>
       </div>
@@ -26,25 +34,23 @@ export function Home(): ReactElement {
       <div className="row course-container">
         {Courses.length > 0 ? (
           Courses.map((course: ICourse, index: number) => (
-            <CourseCard key={index} course={course} onEditClick={() => handleEditClick(course)} />
+            <CourseCard key={index} course={course} onEditClick={() => openModal('Edit Course', course)} />
           ))
         ) : (
           <p>No courses available.</p> 
         )}
       </div>
 
-    {showEditModal && currentCourse && (
-      <GenericModal
-        show={showEditModal}
-        handleClose={handleCloseModal}
-        title={currentCourse ? "Edit Course" : "Add Course"}
-        handleSave={() => handleSaveCourse(currentCourse)}
-      >
-        <EditCourseForm
-          course={currentCourse}
-        />
-      </GenericModal>
-    )}
+      {modalState.show && currentCourse && (
+        <GenericModal
+          show={modalState.show}
+          handleClose={closeModal}
+          title={modalState.content!}
+          handleSave={() => handleSaveCourse(currentCourse!)}
+        >
+          <EditCourseForm course={currentCourse} />
+        </GenericModal>
+      )}
     </div>
   );
 }

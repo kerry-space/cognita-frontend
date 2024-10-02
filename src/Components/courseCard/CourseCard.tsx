@@ -17,12 +17,12 @@ export function CourseCard({ course, onEditClick }: ICourseCardProps) {
   
   return (
     <div className="card  coursecard-container">
-      <Link to={`/course/${course.CourseId}`} className="card-link" style={{ textDecoration: 'none' }}>
-        <h4 className="card-title">{course.CourseName}</h4>
+      <Link to={`/course/${course.courseId}`} className="card-link" style={{ textDecoration: 'none' }}>
+        <h4 className="card-title">{course.courseName}</h4>
         <div className="card-info">
           <i className="bi bi-calendar3" style={{ marginRight: '5px', color: '#2c1a4d' }}></i>
           <p className="card-date">
-            {startDate} - {endDate}
+            {startDate.toString()} - {endDate.toString()}
           </p>
         </div>
         <div className="card-status">
