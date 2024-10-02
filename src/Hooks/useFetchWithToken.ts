@@ -11,17 +11,15 @@ import {
 import { useLocalStorage } from 'usehooks-ts';
 
 interface IUseFetchWithTokenReturn<T> {
-  data: T | null;
   error: CustomError | null;
   isLoading: boolean;
-  requestFunc: () => void;
+  requestFunc: () => Promise<T | void>;
 }
 
 export function useFetchWithToken<T>(
   url: RequestInfo | URL,
   options?: RequestInit
 ): IUseFetchWithTokenReturn<T> {
-  const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tokens, setTokens, clearTokens] = useLocalStorage<ITokens | null>(
     TOKENS,
@@ -53,48 +51,42 @@ export function useFetchWithToken<T>(
     if (tokenIsExpired) {
       // Ask api to refresh token before fetching the data.
       console.log('Token is expired:', tokenIsExpired);
-
-      await refreshTokens(tokens!)
-        .then(async refreshedTokens => {
-          setTokens(refreshedTokens);
-          return await generatedFetch<T>(refreshedTokens.accessToken);
-        })
-        .then(data => {
-          if (data) {
-            setData(data);
-          }
-        })
-        .catch(error => {
-          if (error instanceof RefreshTokenError) {
-            console.log(error);
+      try {
+        const refreshedTokens = await refreshTokens(tokens!);
+        setTokens(refreshedTokens);
+        const data = await generatedFetch<T>(refreshedTokens.accessToken);
+        return data;
+      } catch (error) {
+        if (error instanceof RefreshTokenError) {
+          console.log(error);
+          clearTokens();
+        }
+        if (error instanceof CustomError) {
+          setError(error);
+          if (error.errorCode === 401) {
             clearTokens();
           }
-          if (error instanceof CustomError) {
-            setError(error);
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+        }
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       // Just fetch the data right away
-
-      await generatedFetch<T>(tokens!.accessToken)
-        .then(data => {
-          if (data) {
-            setData(data);
+      try {
+        const data = await generatedFetch<T>(tokens!.accessToken);
+        return data;
+      } catch (error) {
+        if (error instanceof CustomError) {
+          setError(error);
+          if (error.errorCode === 401) {
+            clearTokens();
           }
-        })
-        .catch(error => {
-          if (error instanceof CustomError) {
-            setError(error);
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+        }
+      } finally {
+        setIsLoading(false);
+      }
     }
   }
 
-  return { data, isLoading, error, requestFunc };
+  return { isLoading, error, requestFunc };
 }
