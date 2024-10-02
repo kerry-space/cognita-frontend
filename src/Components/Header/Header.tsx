@@ -4,6 +4,7 @@ import logo from "../../assets/Cognita-logo.png"
 
 
 export function Header(): ReactElement {
+    console.log("Header rendered");
     return (
         <nav className="navbar">
             <a className="navbar-brand" href="#">

@@ -1,4 +1,4 @@
-.card {
+.course-container .card {
     background-color: white; 
     color: #2c1a4d;  
     width: 280px; 
@@ -12,17 +12,17 @@
     justify-content: space-between;
 }
 
-.card:hover {
+ .course-container .card:hover {
     transform: translateY(-5px);  
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.card-title {
+.course-container .card-title {
     font-size: 18px;
     margin-bottom: 10px;
 }
 
-.card-info {
+.course-container .card-info {
     display: flex;
     align-self: center;
     font-size: 14px;
@@ -30,11 +30,11 @@
     margin-bottom: 10px;
 }
 
-.card-date {
+.course-container  .card-date {
     margin-left: 5px;
 }
 
-.card-status {
+.course-container .card-status {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,10 +49,45 @@
 
 
   
-  .card .bi-pencil-square:hover {
+.course-container  .card .bi-pencil-square:hover {
     color: #E6D9A2 !important;
     transform: scale(1.2); 
     cursor: pointer; 
+  }
+
+/* Main container styling */
+.course-detail-container {
+    display: flex;
+    flex-direction: row;  /* Change direction to row for side-by-side layout */
+    justify-content: space-between; /* Ensures spacing between the main areas */
+    padding: 20px;
+    gap: 20px;  /* Provides space between children */
+  }
+  
+  /* Styling for the main content area to align course info and participants side by side */
+  .main-content {
+    display: flex;
+    flex-direction: row;
+    flex: 3;  /* Takes 3 parts of the available space */
+    gap: 20px;
+  }
+  
+  /* Individual sections styling */
+  .course-info, .participants {
+    flex: 1;  /* Each takes equal space in the main-content */
+    background-color: #f4f4f9;  /* Example background color */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  /* Module section styling to fill the space correctly */
+  .modules {
+    flex: 2;  /* Takes 2 parts of the available space */
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;  /* Aligns module items vertically */
   }
 
 

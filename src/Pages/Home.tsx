@@ -23,7 +23,7 @@ export function Home(): ReactElement {
         </button>
       </div>
 
-      <div className="row">
+      <div className="row course-container">
         {Courses.length > 0 ? (
           Courses.map((course: ICourse, index: number) => (
             <CourseCard key={index} course={course} onEditClick={() => handleEditClick(course)} />
@@ -33,19 +33,18 @@ export function Home(): ReactElement {
         )}
       </div>
 
-      {showEditModal && (
-        <GenericModal
-          show={showEditModal}
-          handleClose={handleCloseModal}
-          title={currentCourse ? "Edit Course" : "Add Course"}  
-          handleSave={() => handleSaveCourse(currentCourse!)} 
-        >
-          <EditCourseForm
-            course={currentCourse!}
-            onChange={(updatedCourse: ICourse) => handleEditClick(updatedCourse)} 
-          />
-        </GenericModal>
-      )}
+    {showEditModal && currentCourse && (
+      <GenericModal
+        show={showEditModal}
+        handleClose={handleCloseModal}
+        title={currentCourse ? "Edit Course" : "Add Course"}
+        handleSave={() => handleSaveCourse(currentCourse)}
+      >
+        <EditCourseForm
+          course={currentCourse}
+        />
+      </GenericModal>
+    )}
     </div>
   );
 }

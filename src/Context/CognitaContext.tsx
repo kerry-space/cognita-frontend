@@ -17,6 +17,7 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
     // Fetch courses asynchronously from an API
     const fetchCoursesAsync = async () => {
       try {
+        
         const URL = 'https://localhost:7147/api/courses';
         const response = await fetch(URL);
   
@@ -53,10 +54,20 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
         setShowEditModal(true);
     };
 
-    // Handles when the edit icon is clicked
-    const handleEditClick = (): void => {
-        setShowEditModal(true); // Show the modal for editing
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const { name, value } = event.target;
         
+        if (currentCourse) {
+            // Update the current course state
+            setCurrentCourse({ ...currentCourse, [name]: value });
+        }
+    };
+
+    // Handles when the edit icon is clicked
+    const handleEditClick = (course:ICourse): void => {
+        setShowEditModal(true); // Show the modal for editing
+        setCurrentCourse(course);
     };
 
     // Close the modal
@@ -124,6 +135,7 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
         fetchCoursesAsync,
         handleAddCourseClick,
         handleEditClick,
+        handleInputChange,
         handleCloseModal,
         handleSaveCourse,
         calculateWeekStatus,

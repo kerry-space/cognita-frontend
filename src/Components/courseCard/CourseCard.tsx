@@ -13,9 +13,10 @@ export function CourseCard({ course, onEditClick }: ICourseCardProps) {
   const { calculateWeekStatus,  } = useCognitaFunc();
   const { weeks, status, startDate, endDate } = calculateWeekStatus(course);
 
-  console.log(status.toLowerCase())
+  
+  
   return (
-    <div className="card">
+    <div className="card  coursecard-container">
       <Link to={`/course/${course.CourseId}`} className="card-link" style={{ textDecoration: 'none' }}>
         <h4 className="card-title">{course.CourseName}</h4>
         <div className="card-info">

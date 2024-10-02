@@ -51,6 +51,7 @@ export interface ICognitaContext {
    fetchCoursesAsync: () => void;
    handleAddCourseClick: () => void;
    handleEditClick: (course: ICourse) => void;
+   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
    handleCloseModal: () => void;
    handleSaveCourse: (updatedCourse: ICourse) => void;
    calculateWeekStatus: (course: ICourse) => { weeks: number; status: string; startDate: string; endDate: string };

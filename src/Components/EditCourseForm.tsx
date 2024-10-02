@@ -1,18 +1,17 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import { ICourse } from '../Data/Interface';
+import { useCognitaFunc } from '../Hooks';
 
 interface IEditCourseFormProps {
-  course: ICourse;
-  onChange: (course: ICourse) => void;
+  course: ICourse | null;
 }
 
-// Updated ChangeEvent to work with react-bootstrap Form.Control
-export function EditCourseForm({ course, onChange }: IEditCourseFormProps) {
-  const handleInputChange = (event: React.ChangeEvent<any>): void => {
-    const { name, value } = event.target;
-    onChange({ ...course, [name]: value });
-  };
+export function EditCourseForm({ course }: IEditCourseFormProps) {
+  const { calculateWeekStatus,handleInputChange } = useCognitaFunc();
+  if (!course) { return <div>Loading course data...</div>;}
+
+  const {startDate,endDate} = calculateWeekStatus(course);
 
   return (
     <Form>
@@ -30,7 +29,7 @@ export function EditCourseForm({ course, onChange }: IEditCourseFormProps) {
         <Form.Control
           type="date"
           name="StartDate"
-          value={course.StartDate.toString()}
+          value={startDate}
           onChange={handleInputChange}
         />
       </Form.Group>
@@ -39,7 +38,7 @@ export function EditCourseForm({ course, onChange }: IEditCourseFormProps) {
         <Form.Control
           type="date"
           name="EndDate"
-          value={course.EndDate.toString()}
+          value={endDate}
           onChange={handleInputChange}
         />
       </Form.Group>
