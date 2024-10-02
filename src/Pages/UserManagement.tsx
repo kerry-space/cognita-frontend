@@ -1,6 +1,5 @@
 import './UserManagement.css';
-import { UserManagementUI } from '../Components/UserManagement';
-
+import { UserManagementUI } from '../Components';
 export function UserManagement() {
   return (
     <section

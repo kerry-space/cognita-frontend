@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { IUser } from '../../utils';
 import _ from 'lodash';
 import './css/UserTable.css';
+import { Spinner } from '../Loaders';
 
 const usersPerPage = 8;
 
@@ -30,9 +31,15 @@ interface IUserTableProps {
   editClick: (user: IUser) => void;
   deleteClick: (userId: number) => void;
   data: IUser[];
+  isLoading?: boolean;
 }
 
-export function UserTable({ editClick, deleteClick, data }: IUserTableProps) {
+export function UserTable({
+  editClick,
+  deleteClick,
+  data,
+  isLoading = false,
+}: IUserTableProps) {
   const paginatedData =
     data?.length === 0
       ? [createTableFiller(0)]
@@ -83,12 +90,20 @@ export function UserTable({ editClick, deleteClick, data }: IUserTableProps) {
         <tbody>
           {paginatedData[activePage]?.map((user: IUser, idx) => (
             <tr key={idx}>
-              <td className='table-cell role-cell'>{getRole(user.role)}</td>
-              <td className='table-cell'>{user.name}</td>
-              <td className='table-cell'>{user.email}</td>
-              <td className='table-cell'>{user.courseName}</td>
+              <td className='table-cell role-cell'>
+                {isLoading ? <Spinner /> : getRole(user.role)}
+              </td>
+              <td className='table-cell'>
+                {isLoading ? <Spinner /> : user.name}
+              </td>
+              <td className='table-cell'>
+                {isLoading ? <Spinner /> : user.email}
+              </td>
+              <td className='table-cell'>
+                {isLoading ? <Spinner /> : user.courseName}
+              </td>
               <td className='table-cell btn-container'>
-                {user.email ? (
+                {user.email && !isLoading ? (
                   <>
                     <button
                       className='edit-btn'

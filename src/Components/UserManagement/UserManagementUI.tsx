@@ -8,7 +8,9 @@ import { useFetchWithToken } from '../../Hooks';
 export function UserManagementUI() {
   const [users, setUsers] = React.useState<IUser[]>([]);
   const [filteredUsers, setFilteredUsers] = React.useState<IUser[]>([]);
-  const { data, requestFunc } = useFetchWithToken(`${BASE_URL}/users`);
+  const { requestFunc, isLoading } = useFetchWithToken<IUser[]>(
+    `${BASE_URL}/users`
+  );
   const onSearchChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     setFilteredUsers(
       users.filter(
@@ -22,9 +24,11 @@ export function UserManagementUI() {
   const debouncedSearch = _.debounce(onSearchChange, 400);
 
   React.useEffect(() => {
-    requestFunc().then(() => {
-      setUsers(data as IUser[]);
-      setFilteredUsers(data as IUser[]);
+    requestFunc().then(data => {
+      if (data) {
+        setUsers(data);
+        setFilteredUsers(data);
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -36,10 +40,12 @@ export function UserManagementUI() {
         <SearchInput onSearchChange={debouncedSearch} />
         <button className='add-user-btn'>Add user</button>
       </div>
+
       <UserTable
         data={filteredUsers}
         editClick={() => {}}
         deleteClick={() => {}}
+        isLoading={isLoading}
       />
     </div>
   );

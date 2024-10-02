@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import App from './App';
 import { LoginPage, UserManagement } from './Pages';
-import { RequireAuth } from './Components/RequireAuth/RequireAuth';
+import { RequireAuth } from './Components';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
