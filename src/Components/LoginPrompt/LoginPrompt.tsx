@@ -16,10 +16,9 @@ export function LoginPrompt() {
       password: string;
     };
     try {
-      await login(formDetails).then(() => {
-        console.log('login success..');
-        navigate('/user-management');
-      });
+      await login(formDetails);
+      console.log('login success..');
+      navigate('/');
     } catch (err) {
       console.log(err);
       setIsInvalidCreds(true);
@@ -64,10 +63,6 @@ export function LoginPrompt() {
             required
           />
         </div>
-        {/* This hidden input is to catch an enter-press when user has any of the inputs focused 
-        (i.e finished typing its password). If this is not present, when user presses enter the form
-        is submitted anyways but user is not redirected, SUPERWEIRD! */}
-        <input type='submit' className='d-none' />
         <button className='btn wider' type='submit'>
           Login
         </button>
