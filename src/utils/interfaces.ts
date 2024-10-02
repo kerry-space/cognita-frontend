@@ -15,6 +15,7 @@ export interface ILoginCredentials {
 }
 
 export interface IUser {
+  courseId: number;
   role: 0 | 1;
   email: string;
   courseName: string;

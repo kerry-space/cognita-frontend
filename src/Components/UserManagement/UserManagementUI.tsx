@@ -2,18 +2,27 @@ import React from 'react';
 import './css/UsermanagementUI.css';
 import { UserTable, SearchInput } from '.';
 import _ from 'lodash';
-import { BASE_URL, IUser } from '../../utils';
-import { useFetchWithToken } from '../../Hooks';
+import { IUser } from '../../utils';
 
-export function UserManagementUI() {
-  const [users, setUsers] = React.useState<IUser[]>([]);
-  const [filteredUsers, setFilteredUsers] = React.useState<IUser[]>([]);
-  const { requestFunc, isLoading } = useFetchWithToken<IUser[]>(
-    `${BASE_URL}/users`
-  );
+interface IUserManagementUIProps {
+  header: string;
+  data: IUser[];
+  editClick: (user: IUser) => void;
+  deleteClick: (id: number) => void;
+  addClick: (user: IUser) => void;
+}
+
+export function UserManagementUI({
+  header,
+  data,
+  editClick,
+  deleteClick,
+}: IUserManagementUIProps) {
+  const [filteredUsers, setFilteredUsers] = React.useState<IUser[]>(data);
+
   const onSearchChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     setFilteredUsers(
-      users.filter(
+      data.filter(
         u =>
           u.name.toLocaleLowerCase().includes(e.target.value.toLowerCase()) ||
           u.email.toLocaleLowerCase().includes(e.target.value.toLowerCase())
@@ -23,19 +32,9 @@ export function UserManagementUI() {
 
   const debouncedSearch = _.debounce(onSearchChange, 400);
 
-  React.useEffect(() => {
-    requestFunc().then(data => {
-      if (data) {
-        setUsers(data);
-        setFilteredUsers(data);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <div className='container'>
-      <h2 className='header mb-5'>User Management</h2>
+      <h2 className='header mb-5'>{header}</h2>
       <div className='d-flex w-100 justify-content-between mb-4 align-items-end'>
         <SearchInput onSearchChange={debouncedSearch} />
         <button className='add-user-btn'>Add user</button>
@@ -43,9 +42,8 @@ export function UserManagementUI() {
 
       <UserTable
         data={filteredUsers}
-        editClick={() => {}}
-        deleteClick={() => {}}
-        isLoading={isLoading}
+        editClick={editClick}
+        deleteClick={deleteClick}
       />
     </div>
   );
