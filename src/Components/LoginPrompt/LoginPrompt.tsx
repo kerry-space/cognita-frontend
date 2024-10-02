@@ -18,11 +18,6 @@ export function LoginPrompt() {
     try {
       await login(formDetails);
       console.log('login success..');
-      //The useEffect in AuthContext which sets isLoggedIn state is not run in time
-      //for the 'navigate('/')' call below to work. It only works on the second try when
-      //the token cookie is already set. This 10ms timeout solves this problem. Not the most elegant
-      //solution but the only one I can think of right now without messing around with Niclas's code.
-      await new Promise(resolve => setTimeout(resolve, 10));
       navigate('/');
     } catch (err) {
       console.log(err);
