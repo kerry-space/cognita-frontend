@@ -39,7 +39,7 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
        
       } catch (error) {
         throw new Error('Failed to fetch course.');
-        console.error('Error fetching random cocktail:', error);
+        console.error('Error fetching random courses:', error);
       }
     };
 

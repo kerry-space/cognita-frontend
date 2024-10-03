@@ -13,10 +13,6 @@ export function CourseDetail(): ReactElement {
   const { courseId } = useParams<{ courseId: string }>();
   const {
     findCourseById,
-    showEditModal,
-    handleEditClick,
-    handleCloseModal,
-    handleSaveCourse,
   } = useCognitaFunc(); // Using Cognita context
   const [course, setCourse] = useState<ICourse | null>(null);
 
@@ -32,10 +28,10 @@ export function CourseDetail(): ReactElement {
   return (
     <div className="course-detail-container">
       <div className="main-content">
-        <CourseInfo course={course} onEditClick={() => handleEditClick(course)} />
+        <CourseInfo course={course}  />
         <Participants course={course} />
       </div>
-     
+
     </div>
   );
 }

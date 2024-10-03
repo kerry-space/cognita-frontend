@@ -30,12 +30,12 @@ export function Home(): ReactElement {
           <i className="bi bi-plus-circle-fill icon"></i> Add Course
         </button>
       </div>
-
+ 
       <div className="row course-container">
         {Courses.length > 0 ? (
           Courses.map((course: ICourse, index: number) => (
             <CourseCard key={index} course={course} onEditClick={() => openModal('Edit Course', course)} />
-          ))
+          )) 
         ) : (
           <p>No courses available.</p> 
         )}

@@ -1,39 +1,48 @@
-.course-info {
-    background-color: white; 
-    color: #2c1a4d;  
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);  
-    margin: auto;
-    width: 95%; /* Adjust width to match the layout */
-    max-width: 1160px; /* Match the specific width from the image */
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-  
-  .course-info h1 {
-    font-size: 24px; /* Adjust font size as needed */
-    margin-bottom: 10px;
-  }
-  
-  .course-info p {
-    font-size: 16px; /* Adjust font size as needed */
-    line-height: 1.5;
-  }
-  
-  .button {
-    background-color: #2c1a4d;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
+.course-info-container {
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  margin: 20px auto;
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f4f4f9;
+}
+
+.course-info-container .card-info {
+  display: flex;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.course-info-container h1 {
+  font-size: 24px;
+  color: #2c1a4d;
+  margin-bottom: 10px;
+}
+
+.course-info-container .card-date {
+  margin-left: 5px;
+}
+
+.course-info-container .button-container {
+  display: flex;
+}
+
+.course-info-container .button-container .button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: #4C49A2;
+}
+
+.course-info-container .button-container .button:hover {
+  background-color: #413f73;
+}
+
+.course-info-container .button i {
+  font-size: 1.2rem;
+}

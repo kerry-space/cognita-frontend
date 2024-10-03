@@ -6,7 +6,7 @@ import { AddActivityForm } from './Forms/AddActivityForm';
 import Edi
 import { EditActivityForm } from './Forms/EditActivityForm';
 
-function Module({ course }) {
+export function Module({ course }) {
   const { setShowEditModal, showEditModal, handleEditClick } = useCognitaFunc();
   const [currentModule, setCurrentModule] = useState(null);
   const [currentActivity, setCurrentActivity] = useState(null);
