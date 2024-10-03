@@ -16,7 +16,7 @@ export function Header(): ReactElement {
           Home
         </Link>
         <Link className='nav-link' to={'/user-management'}>
-          User Management
+          User management
         </Link>
         <a onClick={logout} className='nav-link'>
           Logout

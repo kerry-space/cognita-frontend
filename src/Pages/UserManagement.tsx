@@ -1,5 +1,5 @@
 import './UserManagement.css';
-import { Spinner, UserManagementUI } from '../Components';
+import { UserManagementUI, Spinner } from '../Components';
 import { useFetchWithToken } from '../Hooks';
 import { IUser, BASE_URL } from '../utils';
 import { useEffect, useState } from 'react';
@@ -29,7 +29,7 @@ export function UserManagement() {
   return (
     <section
       className={
-        'vh-100 d-flex justify-content-center align-items-center user-mgmt-page'
+        'd-flex justify-content-center align-items-center user-mgmt-page'
       }>
       {isLoading ? (
         <Spinner />
