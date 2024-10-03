@@ -1,0 +1,125 @@
+.course-container .card {
+    background-color: white; 
+    color: #2c1a4d;  
+    width: 280px; 
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);  
+    position: relative;  
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+ .course-container .card:hover {
+    transform: translateY(-5px);  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.course-container .card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.course-container .card-info {
+    display: flex;
+    align-self: center;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.course-container  .card-date {
+    margin-left: 5px;
+}
+
+.course-container .card-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+}
+
+
+
+.bi-calendar3 {
+    font-size: 16px;  
+}
+
+
+  
+.course-container  .card .bi-pencil-square:hover {
+    color: #E6D9A2 !important;
+    transform: scale(1.2); 
+    cursor: pointer; 
+  }
+
+/* Main container styling */
+.course-detail-container {
+    display: flex;
+    flex-direction: row;  /* Change direction to row for side-by-side layout */
+    justify-content: space-between; /* Ensures spacing between the main areas */
+    padding: 20px;
+    gap: 20px;  /* Provides space between children */
+  }
+  
+  /* Styling for the main content area to align course info and participants side by side */
+  .main-content {
+    display: flex;
+    flex-direction: row;
+    flex: 3;  /* Takes 3 parts of the available space */
+    gap: 20px;
+  }
+  
+  /* Individual sections styling */
+  .course-container  .course-info {
+    flex: 1;  /* Each takes equal space in the main-content */
+    background-color: #f4f4f9;  /* Example background color */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  /* Module section styling to fill the space correctly */
+  .modules {
+    flex: 2;  /* Takes 2 parts of the available space */
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;  /* Aligns module items vertically */
+  }
+
+
+
+  .card-duration {
+    background-color: #d8c891; 
+    color: #2c1a4d; 
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+.status-upcoming {
+    background-color: #E6D9A2; /* Soft yellow for attention but not urgency */
+    color: #2c1a4d; /* Deep purple for contrast */
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+.status-in-progress {
+    background-color: #007BFF; /* Soft blue for a calming, professional look */
+    color: white; /* White for high contrast */
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+.status-completed {
+    background-color: #28a745; /* Green to signify completion and success */
+    color: white; /* White for readability */
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+}

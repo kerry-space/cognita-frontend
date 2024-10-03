@@ -1,21 +1,20 @@
-import { useEffect } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Outlet } from 'react-router-dom';
-import { useCognitaFunc } from './Hooks/useCognitaFunc';
+import {Outlet} from 'react-router-dom';
+import { Header } from './Components/Header/Header';
 
 function App() {
-  const { fetchCoursesAsync } = useCognitaFunc(); // Use useCognitaContext
 
-  useEffect(() => {
-    fetchCoursesAsync();
-  }, []);
+
 
   return (
     <>
+    <Header/>
       <Outlet />
     </>
   );
 }
 
 export default App;
+ 

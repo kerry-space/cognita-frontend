@@ -1,0 +1,25 @@
+.module-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .module-form label {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .module-form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .save-button {
+    background-color: #4C49A2; /* Adjust the color to match your design */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
