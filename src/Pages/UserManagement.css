@@ -1,4 +1,5 @@
 .user-mgmt-page {
   background-color: var(--main-bg-color);
+  /* 76px is the height of the navbar */
   height: calc(100vh - 76px);
 }
