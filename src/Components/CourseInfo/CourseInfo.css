@@ -1,0 +1,48 @@
+.course-info-container {
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  margin: 20px auto;
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f4f4f9;
+}
+
+.course-info-container .card-info {
+  display: flex;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.course-info-container h1 {
+  font-size: 24px;
+  color: #2c1a4d;
+  margin-bottom: 10px;
+}
+
+.course-info-container .card-date {
+  margin-left: 5px;
+}
+
+.course-info-container .button-container {
+  display: flex;
+}
+
+.course-info-container .button-container .button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: #4C49A2;
+}
+
+.course-info-container .button-container .button:hover {
+  background-color: #413f73;
+}
+
+.course-info-container .button i {
+  font-size: 1.2rem;
+}

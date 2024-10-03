@@ -1,0 +1,9 @@
+.participants {
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f4f4f9;
+}
