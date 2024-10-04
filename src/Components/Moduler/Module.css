@@ -1,10 +1,4 @@
-/* General Module and Page Layout */
-.container {
-  background-color: #f8f9fa; /* Light background for the whole page */
-  color: #495057; /* Dark grey text color similar to Bootstrap's default */
-  font-family: 'Open Sans', sans-serif; /* Commonly used font */
-  padding: 20px;
-}
+
 
 .module-header {
   margin-bottom: 20px;

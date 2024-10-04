@@ -1,8 +1,3 @@
-import { Modal } from 'react-bootstrap';
-import { IActivity } from './Interface';
-import { Dispatch, SetStateAction } from "react";
-
-
  export interface ICourse{
    courseId: number;
    courseName: string;
@@ -47,11 +42,7 @@ export interface IActivityType{
     title: string;
 }
 
-export enum ActivityType {
-   LECTURE = 'LECTURE',
-   ASSIGNMENT = 'ASSIGNMENT',
-   ELEARNING = 'ELEARNING',
- }
+
 
 export interface ICognitaContext {
    Courses: ICourse[];
@@ -66,7 +57,7 @@ export interface ICognitaContext {
    fetchCoursesAsync: () => void;
    handleAddCourseClick: () => void;
    calculateWeekStatus: (course: ICourse) => { weeks: number; status: string; startDate:  string | Date; endDate: string | Date };
-   handleSaveCourse: (currentCourse: ICourse) => void;
+   handleSaveCourse: () => void;
    
    openModal: (content: string, course: ICourse | null) => void; 
    closeModal: () => void;
@@ -75,5 +66,3 @@ export interface ICognitaContext {
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>)  => void;
    handleShowModal: (content: string) => void;
 }
-
-

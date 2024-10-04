@@ -1,0 +1,67 @@
+.user-table .column-header {
+  font-size: 1.1rem;
+}
+
+.user-table .table-cell {
+  background-color: var(--light-purple);
+  vertical-align: middle;
+}
+
+.user-table .edit-btn {
+  background-color: white;
+  border-radius: 10px;
+  padding-inline: 1.5rem;
+  padding-block: 0.5rem;
+  border: none;
+}
+.user-table .delete-btn {
+  background-color: red;
+  border-radius: 10px;
+  padding-inline: 1.5rem;
+  padding-block: 0.5rem;
+  border: none;
+  color: white;
+}
+
+.user-table .btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.user-table .empty-filler {
+  height: 40px;
+}
+
+.user-table .header-role {
+  width: 10%;
+}
+.user-table .header-name {
+  width: 20%;
+}
+.user-table .header-email {
+  width: 30%;
+}
+.user-table .header-course {
+  width: 20%;
+}
+.user-table .header-actions {
+  width: 20%;
+  text-align: center;
+}
+
+.user-mgmt-page .pagination-container {
+  background-color: var(--main-bg-color);
+  padding: 0.3rem;
+  border-radius: 10px;
+  gap: 5px;
+}
+
+.user-mgmt-page .pagination-btn {
+  background-color: transparent;
+  color: white;
+}
+
+.user-mgmt-page .pagination-numbers {
+  background-color: transparent;
+  color: white;
+}

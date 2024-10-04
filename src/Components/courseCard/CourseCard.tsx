@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ICourse } from '../../Data/Interface';
 import './CourseCard.css';
 import { useCognitaFunc } from '../../Hooks/useCognitaFunc';
+import { useAuthContext } from '../../Hooks';
 
 interface ICourseCardProps {
   course: ICourse;
@@ -12,6 +13,8 @@ interface ICourseCardProps {
 export function CourseCard({ course, onEditClick }: ICourseCardProps) {
   const { calculateWeekStatus,  } = useCognitaFunc();
   const { weeks, status, startDate, endDate } = calculateWeekStatus(course);
+  const { tokens } = useAuthContext();
+
 
   
   
@@ -29,7 +32,8 @@ export function CourseCard({ course, onEditClick }: ICourseCardProps) {
           <span className="card-duration">{weeks} weeks</span>
           <span className={`status status-${status.toLowerCase()}`}>{status}</span>
         </div>
-        <i
+        {tokens?.role === "Admin" && (
+          <i
           className="bi bi-pencil-square"
           onClick={(e) => {
             e.preventDefault();
@@ -37,6 +41,7 @@ export function CourseCard({ course, onEditClick }: ICourseCardProps) {
           }}
           style={{ position: 'absolute', top: '20px', right: '20px', color: '#2c1a4d', cursor: 'pointer' }}
         ></i>
+        )}
       </Link>
     </div>
   );

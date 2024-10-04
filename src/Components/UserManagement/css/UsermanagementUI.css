@@ -1,0 +1,19 @@
+.user-mgmt-page .container {
+  background-color: var(--light-purple);
+  border-radius: 1rem;
+  padding: 3rem;
+}
+
+.user-mgmt-page .header {
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+.user-mgmt-page .add-user-btn {
+  background-color: var(--sand-beige);
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+}
