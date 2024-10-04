@@ -44,7 +44,7 @@ export interface ICognitaContext {
     startDate: string | Date;
     endDate: string | Date;
   };
-  handleSaveCourse: (currentCourse: ICourse) => void;
+  handleSaveCourse: () => void;
 
   openModal: (content: string, course: ICourse | null) => void;
   closeModal: () => void;
