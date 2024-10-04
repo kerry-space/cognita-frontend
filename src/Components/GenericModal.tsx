@@ -7,6 +7,8 @@ interface GenericModalProps {
   handleClose: () => void;
   handleSave: () => void;
   children: React.ReactNode;
+  btnFormId?: string;
+  btnType?: 'button' | 'submit' | 'reset';
 }
 
 function GenericModal({
@@ -15,6 +17,8 @@ function GenericModal({
   handleClose,
   handleSave,
   children,
+  btnFormId,
+  btnType,
 }: GenericModalProps) {
   return (
     <Modal
@@ -35,7 +39,11 @@ function GenericModal({
           <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={handleSave}>
+          <Button
+            form={btnFormId}
+            type={btnType}
+            variant='primary'
+            onClick={handleSave}>
             Save Changes
           </Button>
         </Modal.Footer>
