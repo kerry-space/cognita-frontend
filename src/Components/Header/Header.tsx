@@ -10,7 +10,7 @@ export function Header(): ReactElement {
   return (
     <nav className="navbar">
       <a className="navbar-brand" href="#">
-        <img src={logo} alt="Cognita" className="navbar-logo" />
+        <img src={logo} alt="Cognita logo" className="navbar-logo" />
       </a>
       <div className="navbar-links">
         <Link className="nav-link" to={"/"}>

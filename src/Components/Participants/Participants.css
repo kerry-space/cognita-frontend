@@ -7,3 +7,28 @@
     border-radius: 10px;
     background-color: #f4f4f9;
 }
+
+.course-participants-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 6rem;
+}
+
+.course-participants-list > * {
+    margin: 0;
+    padding: 0.25rem;
+}
+
+.course-participants-modal > * {
+    margin-bottom: 0.5rem;
+}
+
+.course-participants-modal-entry > * {
+    margin: 0;
+}
+
+.course-participants-modal-second-row {
+    display: flex;
+    justify-content: space-between;
+}
