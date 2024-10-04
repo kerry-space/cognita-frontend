@@ -33,6 +33,10 @@
     padding-top: 0.5rem;
 }
 
+.course-participants-modal-entry {
+    padding: 0.25rem;
+}
+
 .course-participants-modal-entry > * {
     padding: 0;
     padding-left: 1rem;

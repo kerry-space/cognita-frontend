@@ -3,6 +3,7 @@ import { UserManagementUI, Spinner, UserHandlerPopup } from '../Components';
 import { useFetchWithToken } from '../Hooks';
 import { IUser, BASE_URL, IUserForm } from '../utils';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const getTitle = (arg: 'edit' | 'create' | undefined): string => {
   switch (arg) {
@@ -38,8 +39,16 @@ export function UserManagement() {
     }
   );
 
+  // Adapted for loading users in a specific course.
+  let requestUrl: string = `${BASE_URL}/users`
+  let location = window.location.pathname;
+  if (location !== '/user-management') {
+    const { courseId } = useParams<{ courseId: string }>();
+    requestUrl = `${BASE_URL}/courses/${courseId}/users`;
+  }
+
   const { requestFunc: fetchUsers, isLoading } = useFetchWithToken<IUser[]>(
-    `${BASE_URL}/users`
+    requestUrl
   );
 
   useEffect(() => {
