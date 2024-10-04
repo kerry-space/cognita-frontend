@@ -5,8 +5,11 @@ import { EditCourseForm } from '../Components/EditCourseForm';
 import { useCognitaFunc } from '../Hooks/useCognitaFunc';
 import { ICourse } from '../Data/Interface';
 import './Home.css';
+import { useAuthContext } from '../Hooks';
 
 export function Home(): ReactElement {
+  const { tokens } = useAuthContext();
+
   const {
     Courses,
     modalState,
@@ -24,12 +27,14 @@ export function Home(): ReactElement {
   }, []);
 
   return (
-    <div className='container mt-5'>
-      <div className='container course-title'>
+    <div className='container home-container mt-5'>
+      <div className='container home-container course-title'>
         <h1 className='text-center mb-4'>Available Courses</h1>
-        <button className='addButton' onClick={handleAddCourseClick}>
-          <i className='bi bi-plus-circle-fill icon'></i> Add Course
-        </button>
+       {tokens?.role === "Admin" && (
+         <button className='addButton' onClick={handleAddCourseClick}>
+         <i className='bi bi-plus-circle-fill icon'></i> Add Course
+       </button>
+       )}
       </div>
 
       <div className='row course-container'>

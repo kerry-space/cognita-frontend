@@ -9,6 +9,7 @@ import { CourseDetail } from './Components/CourseDetail/CourseDetail';
 import { RequireAuth } from './Components/RequireAuth';
 
 export const router = createBrowserRouter(
+  
   createRoutesFromElements(
     <>
       <Route path='/' element={<RequireAuth children={<App />} />}>

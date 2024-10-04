@@ -1,10 +1,10 @@
 import React from 'react';
-import { ICourse } from '../../Data/Interface';
+import { ICourse, ICourseWithModule } from '../../Data/Interface';
 
 import "./Participants.css"
 
 interface ParticipantsProps {
-  course: ICourse;
+  course: ICourseWithModule;
 }
 
 export function Participants({ course }: ParticipantsProps) {

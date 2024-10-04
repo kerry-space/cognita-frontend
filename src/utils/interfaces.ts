@@ -2,11 +2,13 @@ export interface IAuthContext {
   isLoggedIn: boolean;
   login: (creds: ILoginCredentials) => Promise<void>;
   logout: () => void;
+  tokens: ITokens | null;
 }
 
 export interface ITokens {
   accessToken: string;
   refreshToken: string;
+  role: 'User' | 'Admin';
 }
 
 export interface ILoginCredentials {

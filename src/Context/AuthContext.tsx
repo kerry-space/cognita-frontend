@@ -19,7 +19,7 @@ export function AuthProvider({ children }: IAuthProviderProps): ReactElement {
     TOKENS,
     null
   );
-  const values: IAuthContext = { isLoggedIn: tokens !== null, login, logout };
+  const values: IAuthContext = { isLoggedIn: tokens !== null, login, logout,tokens };
 
   async function login({ userName, password }: ILoginCredentials) {
     const tokens = await loginReq({ userName, password });

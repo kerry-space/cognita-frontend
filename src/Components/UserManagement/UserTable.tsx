@@ -3,7 +3,7 @@ import { IUser } from '../../utils';
 import _ from 'lodash';
 import './css/UserTable.css';
 
-const usersPerPage = 8;
+const usersPerPage = 5;
 
 const getRole = (arg: '' | 0 | 1) => {
   switch (arg) {
