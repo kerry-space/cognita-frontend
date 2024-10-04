@@ -8,15 +8,14 @@ interface IUserManagementUIProps {
   header: string;
   data: IUser[];
   editClick: (user: IUser) => void;
-  deleteClick: (id: number) => void;
-  addClick: (user: IUser) => void;
+  addClick: () => void;
 }
 
 export function UserManagementUI({
   header,
   data,
   editClick,
-  deleteClick,
+  addClick,
 }: IUserManagementUIProps) {
   const [filteredUsers, setFilteredUsers] = React.useState<IUser[]>(data);
 
@@ -37,14 +36,12 @@ export function UserManagementUI({
       <h2 className='header mb-5'>{header}</h2>
       <div className='d-flex w-100 justify-content-between mb-4 align-items-end'>
         <SearchInput onSearchChange={debouncedSearch} />
-        <button className='add-user-btn'>Add user</button>
+        <button onClick={addClick} className='add-user-btn'>
+          Add user
+        </button>
       </div>
 
-      <UserTable
-        data={filteredUsers}
-        editClick={editClick}
-        deleteClick={deleteClick}
-      />
+      <UserTable data={filteredUsers} editClick={editClick} />
     </div>
   );
 }

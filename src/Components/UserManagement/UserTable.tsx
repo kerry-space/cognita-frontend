@@ -28,11 +28,10 @@ const createTableFiller = (lastPageLength: number) =>
 
 interface IUserTableProps {
   editClick: (user: IUser) => void;
-  deleteClick: (userId: number) => void;
   data: IUser[];
 }
 
-export function UserTable({ editClick, deleteClick, data }: IUserTableProps) {
+export function UserTable({ editClick, data }: IUserTableProps) {
   const paginatedData =
     data?.length === 0
       ? [createTableFiller(0)]
@@ -89,20 +88,9 @@ export function UserTable({ editClick, deleteClick, data }: IUserTableProps) {
               <td className='table-cell'>{user.courseName}</td>
               <td className='table-cell btn-container'>
                 {user.email ? (
-                  <>
-                    <button
-                      className='edit-btn'
-                      onClick={() => editClick(user)}>
-                      Edit
-                    </button>
-                    <button
-                      className='delete-btn'
-                      //TODO Pass something to identify user with to cofirm deletion modal and
-                      //then to backend for deletion
-                      onClick={() => deleteClick(2)}>
-                      Delete
-                    </button>
-                  </>
+                  <button className='edit-btn' onClick={() => editClick(user)}>
+                    Edit
+                  </button>
                 ) : (
                   <div className='empty-filler' />
                 )}
