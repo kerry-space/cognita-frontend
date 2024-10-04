@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ICourse, ICourseWithModule } from '../../Data/Interface';
+import { ICourseWithModule } from '../../Data/Interface';
 
 import "./Participants.css"
 import Button from 'react-bootstrap/esm/Button';
@@ -7,7 +7,7 @@ import { Person } from 'react-bootstrap-icons';
 import { useFetchWithToken } from '../../Hooks/useFetchWithToken';
 import { BASE_URL } from '../../utils/constants';
 import { IUser } from '../../utils/interfaces';
-import GenericModal from '../GenericModal';
+import Modal from 'react-bootstrap/esm/Modal';
 
 interface ParticipantsProps {
   course: ICourseWithModule;
@@ -22,8 +22,12 @@ export function Participants({ course }: ParticipantsProps) {
     `${BASE_URL}/courses/${course.courseId}/users`
   );
 
-  const showParticipants = () => {
+  const showParticipants: React.MouseEventHandler<HTMLButtonElement> = () => {
     setShowModal(true);
+  };
+
+  const hideParticipants: React.MouseEventHandler<HTMLButtonElement> = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -38,8 +42,9 @@ export function Participants({ course }: ParticipantsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log("users")
-  console.log(users)
+  let haveBackground: boolean = false;
+  const divBackgroundClass: string = "course-participants-modal-entry course-participants-modal-background-span"
+  const divBlankClass: string = "course-participants-modal-entry"
 
   return (
     <div className="card participants">
@@ -59,33 +64,46 @@ export function Participants({ course }: ParticipantsProps) {
       <Button variant="primary" onClick={showParticipants}>
         <Person/> View all course participants ({users.length})
       </Button>
-      <GenericModal
+      <Modal
+        className='course-participants-modal'
         title="Course participants"
         show={showModal}
-        handleSave={() => {}}
-        handleClose={() => setShowModal(false)}
-        //btnFormId={formId}
-        //</div>btnType='submit'
-        >
-        <div className='course-participants-modal'>{users.map((u) => (
-          <div>
-            {u.role === 0 && (
-              <div className='course-participants-modal-entry'>
-                <p>{u.name}</p>
-                {u.role === 0 && (
-                  <span className='course-participants-modal-second-row'><p>Teacher</p><p>{u.email}</p></span>
-              )}</div>
-            )}
-            {u.role === 1 && (
-              <div className='course-participants-modal-entry'>
-                <p>{u.name}</p>
-                {u.role === 1 && (
-                  <span className='course-participants-modal-second-row'><p>Student</p><p>{u.email}</p></span>
-              )}</div>
-            )}
-          </div>
-        ))}</div>
-      </GenericModal>
+        onHide={() => setShowModal(false)}
+        handleClose={() => setShowModal(false)}>
+        <Modal.Dialog
+          style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+          <Modal.Header closeButton>
+            <Modal.Title>Course participants</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className='course-participants-modal-body'>
+          <div className='course-participants-modal'>{users.map((u) => (
+            <div>
+              {u.role === 0 && (
+                <div className={haveBackground ? divBackgroundClass : divBlankClass}>
+                  {haveBackground = !haveBackground}
+                  <p>{u.name}</p>
+                  {u.role === 0 && (
+                    <span className='course-participants-modal-second-row'><p>Teacher</p><p>{u.email}</p></span>
+                )}</div>
+              )}
+              {u.role === 1 && (
+                <div className={haveBackground ? divBackgroundClass : divBlankClass}>
+                  {haveBackground = !haveBackground}
+                  <p>{u.name}</p>
+                  {u.role === 1 && (
+                    <span className='course-participants-modal-second-row'><p>Student</p><p>{u.email}</p></span>
+                )}</div>
+              )}
+            </div>
+          ))}</div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={hideParticipants}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </Modal>
     </div>
   );
 }
