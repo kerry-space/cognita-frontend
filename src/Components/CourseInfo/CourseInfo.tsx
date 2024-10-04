@@ -1,12 +1,13 @@
 import React from 'react';
-import { ICourse } from '../../Data/Interface';
+import {ICourseWithModule } from '../../Data/Interface';
 import { useCognitaFunc } from '../../Hooks/useCognitaFunc';
 import "./CourseInfo.css"
 
 interface CourseInfoProps {
-  course: ICourse;
+  course: ICourseWithModule;
   onEditClick?: () => void;
 }
+
 
 export function CourseInfo({ course, }: CourseInfoProps) {
   const { calculateWeekStatus, handleShowModal } = useCognitaFunc();

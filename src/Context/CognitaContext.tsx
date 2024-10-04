@@ -1,5 +1,5 @@
 import { createContext, ReactElement, ReactNode, SetStateAction, useState } from "react";
-import { ICognitaContext, ICourse } from "../Data/Interface";
+import { ActivityType, IActivity, ICognitaContext, ICourse, ICourseWithModule, IModule } from "../Data/Interface";
 import CognitaDataStorage from "../Data/DataStorage";
 import { useFetchWithToken } from "../Hooks";
 import { BASE_URL } from "../utils";
@@ -12,17 +12,21 @@ export const CognitaContext = createContext<ICognitaContext>({} as ICognitaConte
 
 export function CognitaProvider({ children }: ICognitaProviderProps): ReactElement {
     const [Courses, setCourses] = useState<ICourse[]>([]);
-    const [createdCourse, setcreatedCourse] = useState<ICourse | null>(null);
+    const [modalContent, setModalContent] = useState<IModule[]>([]);
     
-    const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [currentCourse, setCurrentCourse] = useState<ICourse | null>(null);
+    const [currentCourseModule, setCurrentCourseModule] = useState<ICourseWithModule[] | null>(null);
+    const [currentActivity, setCurrentActivity] = useState<IActivity | null>(null);
+    const [modalType, setModalType] = useState<string | null>(null);  // New state to track whether it's a module or activity
+
+
     const [modalState, setModalState] = useState<{ show: boolean; content: string | null }>({ show: false, content: null });
-    
+
     
     //Crud backend 
-    const { requestFunc:fetchCourses } = useFetchWithToken<ICourse[]>(
-        `${BASE_URL}/courses`
-      );
+   // Fetch courses
+   const { requestFunc: fetchCourses } = useFetchWithToken<ICourse[]>(`${BASE_URL}/courses`);
+
 
      
 
@@ -43,11 +47,10 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
       }
     };
 
-    // Find a course by its CourseId
-    const findCourseById = (courseId: number): ICourse | null => {
-        const course = Courses.find((course) => course.courseId === courseId);
-        return course || null; // Return null if no course is found
-    };
+   
+
+
+   
 
 
 
@@ -65,11 +68,11 @@ export function CognitaProvider({ children }: ICognitaProviderProps): ReactEleme
 
   const handleAddCourseClick = (): void => {
     const newCourse: ICourse = {
-        courseId: 0,  // New course should have courseId 0 or null
-        courseName: "",  // Ensure this key matches the form's 'name' attribute
-        description: "",
-        startDate: new Date().toISOString().substring(0, 10),  // Default to current date
-        endDate: new Date().toISOString().substring(0, 10),    // Default to current date
+      courseId: 0, // New course should have courseId 0 or null
+      courseName: "", // Ensure this key matches the form's 'name' attribute
+      description: "",
+      startDate: new Date().toISOString().substring(0, 10), // Default to current date
+      endDate: new Date().toISOString().substring(0, 10),
     };
     setCurrentCourse(newCourse);  // Set the new course as the current course
     openModal('Add Course', newCourse);  // Pass the new course to the modal
@@ -80,11 +83,11 @@ const openModal = (content: string, course: ICourse | null = null) => {
   if (!course) {
       // If no course is provided, assume it's the "Add Course" case and set an empty course
       const newCourse: ICourse = {
-          courseId: 0,
-          courseName: "",
-          description: "",
-          startDate: new Date().toISOString().substring(0, 10),
-          endDate: new Date().toISOString().substring(0, 10),
+        courseId: 0,
+        courseName: "",
+        description: "",
+        startDate: new Date().toISOString().substring(0, 10),
+        endDate: new Date().toISOString().substring(0, 10),
       };
       setCurrentCourse(newCourse);
   } else {
@@ -93,13 +96,58 @@ const openModal = (content: string, course: ICourse | null = null) => {
   setModalState({ show: true, content });
 };
 
-    // Handle closing the modal
-    const closeModal = () => {
-        setModalState({ show: false, content: null });
+
+  // Handle closing the modal
+  const closeModal = () => {
+    setModalState({ show: false, content: null });
+  };
+
+const openModuleState = (content: string, module: IModule | null = null) => {
+  setModalType('module');  // Set type to 'module'
+  if (!module) {
+    const newCourseModule: ICourseWithModule = {
+      courseId: 0,
+      courseName: "",
+      description: "",
+      startDate: new Date().toISOString().substring(0, 10),
+      endDate: new Date().toISOString().substring(0, 10),
+  
+      
+    }; 
+    const newModule: IModule = {
+      ModuleId: 0,
+      CourseId: currentCourse?.courseId || 0,
+      ModuleName: "",
+      Description: "",
+      startDate: new Date().toISOString().substring(0, 10),
+      endDate: new Date().toISOString().substring(0, 10),
+      Activities: []
     };
+    setCurrentCourseModule();
+  } else {
+    setCurrentCourseModule(module);
+  }
+  setModalState({ show: true, content });
+};
 
+const openActivityState = (content: string, module: IModule, activity: IActivity | null = null) => {
+  setModalType('activity');  // Set type to 'activity'
+  if (!activity) {
+    const newActivity: IActivity = {
+      ActivityeId: 0,
+      ModuleId: module.ModuleId,
+      ActivityName: "",
+      Description: "",
+      startDate: new Date().toISOString().substring(0, 10),
 
-
+    };
+    setCurrentActivity(newActivity);
+  } else {
+    setCurrentActivity(activity);
+  }
+  setCurrentCourseModule(module);
+  setModalState({ show: true, content });
+};
     const handleSaveCourse = async (currentCourse: ICourse): Promise<void> => {
         const requestOptions: RequestInit = {
           method: currentCourse.courseId === 0 ? 'POST' : 'PUT',
@@ -157,24 +205,31 @@ const openModal = (content: string, course: ICourse | null = null) => {
   const handleShowModal = (content: string) => {
     setModalState({ show: true, content });
   };
-
+  
     // Provide values and functions via the context
     const values: ICognitaContext = {
         Courses,
+        
         currentCourse,
+        
+        currentActivity,
+        
         setCurrentCourse,
+        modalContent,
 
         fetchCoursesAsync,
+        openModuleState,
+        openActivityState,
         handleAddCourseClick,
         calculateWeekStatus,
         handleSaveCourse,
+        
 
         openModal,
         closeModal,
         modalState,
 
         handleInputChange,
-        findCourseById,
         handleShowModal,
         
 

@@ -1,24 +1,90 @@
+/* General Module and Page Layout */
+.container {
+  background-color: #f8f9fa; /* Light background for the whole page */
+  color: #495057; /* Dark grey text color similar to Bootstrap's default */
+  font-family: 'Open Sans', sans-serif; /* Commonly used font */
+  padding: 20px;
+}
+
+.module-header {
+  margin-bottom: 20px;
+  color: #2c1a4d; /* Dark purple */
+}
+
 .module-container {
-    display: flex;
-    flex-direction: column;
-    background-color: #f5f5f5; /* Light grey background */
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .module-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .button {
-    background-color: #4C49A2; /* Adjust the color to match your design */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+  background-color: #ffffff; /* White background for modules */
+  border: 1px solid #dee2e6; /* Bootstrap's default border color */
+  padding: 20px;
+  border-radius: 0.25rem; /* Rounded corners like Bootstrap cards */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Subtle shadow */
+  margin-bottom: 20px;
+}
+
+.card-header {
+  font-size: 1.25rem; /* Larger font size for headers */
+  background: none; /* No background for header */
+  border-bottom: none; /* Remove border bottom */
+  padding-bottom: 0; /* No padding at the bottom */
+}
+
+.card-body {
+  padding-top: 0.5rem; /* Reduced padding on top */
+}
+
+.activities-container {
+  background-color: #f4f4f9; /* Light gray background for activity container */
+  margin-top: 10px;
+  border-top: 2px solid #e9ecef; /* Light border top */
+  padding-top: 10px; /* Padding top for spacing */
+}
+
+.activity-details {
+  padding: 10px;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-bottom: 1px solid #dee2e6; /* Light border for separation */
+}
+
+.activity-details h4 {
+  font-weight: 500; /* Medium font weight */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: #495057; /* Dark grey text */
+}
+
+.activity-details.active {
+  background-color: #e2e6ea; /* Light grey background for active state */
+}
+
+.button, .btn {
+  background-color: #4C49A2; /* Purple background */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.button:hover, .btn:hover {
+  background-color: #3734a9; /* Slightly darker purple on hover */
+  color: #ffffff;
+}
+
+.btn-outline-secondary {
+  color: white;
+  border-color: #4C49A2;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #4C49A2; /* Purple background on hover */
+  color: #ffffff;
+}
+
+/* Icons styling if you use them */
+.icon {
+  margin-right: 5px; /* Space between icon and text */
+}
