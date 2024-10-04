@@ -8,6 +8,7 @@ import { useFetchWithToken } from '../../Hooks/useFetchWithToken';
 import { BASE_URL } from '../../utils/constants';
 import { IUser } from '../../utils/interfaces';
 import Modal from 'react-bootstrap/esm/Modal';
+import { useNavigate, useNavigation } from 'react-router-dom';
 
 interface ParticipantsProps {
   course: ICourseWithModule;
@@ -18,9 +19,13 @@ export function Participants({ course }: ParticipantsProps) {
   const [usersLimited, setUsersLimited] = useState<IUser[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  const courseId: number = course.courseId;
+
   const { requestFunc: fetchUsers, isLoading } = useFetchWithToken<IUser[]>(
-    `${BASE_URL}/courses/${course.courseId}/users`
+    `${BASE_URL}/courses/${courseId}/users`
   );
+
+  const navigate = useNavigate();
 
   const showParticipants: React.MouseEventHandler<HTMLButtonElement> = () => {
     setShowModal(true);
@@ -28,6 +33,10 @@ export function Participants({ course }: ParticipantsProps) {
 
   const hideParticipants: React.MouseEventHandler<HTMLButtonElement> = () => {
     setShowModal(false);
+  };
+
+  const manageUsers: React.MouseEventHandler<HTMLButtonElement> = () => {
+    navigate('/user-management/' + courseId);
   };
 
   useEffect(() => {
@@ -76,6 +85,9 @@ export function Participants({ course }: ParticipantsProps) {
             <Modal.Title>Course participants</Modal.Title>
           </Modal.Header>
           <Modal.Body className='course-participants-modal-body'>
+          <Button variant="primary" onClick={manageUsers}>
+            Manage participants
+          </Button>
           <div className='course-participants-modal'>{users.map((u) => (
             <div>
               {u.role === 0 && (
