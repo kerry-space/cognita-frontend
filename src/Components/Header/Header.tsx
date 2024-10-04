@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import "./Header.css"; // Ensure this points to the correct CSS file
-import logo from "../../assets/Cognita-logo.png";
+import logo from "../../assets/Cognita logo.png";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../Hooks";
 
