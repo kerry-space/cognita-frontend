@@ -54,6 +54,7 @@
   padding: 0.3rem;
   border-radius: 10px;
   gap: 5px;
+  padding-bottom: 0.75rem;
 }
 
 .user-mgmt-page .pagination-btn {
@@ -64,4 +65,5 @@
 .user-mgmt-page .pagination-numbers {
   background-color: transparent;
   color: white;
+  padding-top: 0.5rem;
 }

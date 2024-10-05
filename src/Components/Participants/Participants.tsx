@@ -8,7 +8,8 @@ import { useFetchWithToken } from '../../Hooks/useFetchWithToken';
 import { BASE_URL } from '../../utils/constants';
 import { IUser } from '../../utils/interfaces';
 import Modal from 'react-bootstrap/esm/Modal';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../Hooks/useAuthContext';
 
 interface ParticipantsProps {
   course: ICourseWithModule;
@@ -18,10 +19,11 @@ export function Participants({ course }: ParticipantsProps) {
   const [users, setUsers] = useState<IUser[]>([]);
   const [usersLimited, setUsersLimited] = useState<IUser[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const { tokens } = useAuthContext();
 
   const courseId: number = course.courseId;
 
-  const { requestFunc: fetchUsers, isLoading } = useFetchWithToken<IUser[]>(
+  const { requestFunc: fetchUsers } = useFetchWithToken<IUser[]>(
     `${BASE_URL}/courses/${courseId}/users`
   );
 
@@ -42,8 +44,8 @@ export function Participants({ course }: ParticipantsProps) {
   useEffect(() => {
     fetchUsers().then(data => {
       if (data) {
-        data.sort((u1, u2) => (u1.name.toLowerCase().split(' ')[0] < u2.name.toLowerCase().split(' ')[0]) ? 1 : -1);
-        data.sort((u) => u.role);
+        data.sort((u1, u2) => (u1.name.toLowerCase().split(' ')[0] > u2.name.toLowerCase().split(' ')[0] &&
+          u1.role >= u2.role) ? 1 : -1);
         setUsers(data);
         setUsersLimited(data.slice(0, 6));
       }
@@ -85,9 +87,11 @@ export function Participants({ course }: ParticipantsProps) {
             <Modal.Title>Course participants</Modal.Title>
           </Modal.Header>
           <Modal.Body className='course-participants-modal-body'>
-          <Button variant="primary" onClick={manageUsers}>
-            Manage participants
-          </Button>
+          {tokens?.role === "Admin" && (
+            <Button variant="primary" className='course-participants-modal-button' onClick={manageUsers}>
+              Manage participants
+            </Button>
+            )}
           <div className='course-participants-modal'>{users.map((u) => (
             <div>
               {u.role === 0 && (

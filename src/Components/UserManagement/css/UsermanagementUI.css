@@ -2,6 +2,7 @@
   background-color: var(--light-purple);
   border-radius: 1rem;
   padding: 3rem;
+  margin-bottom: 3rem;
 }
 
 .user-mgmt-page .header {

@@ -28,6 +28,11 @@
     margin: 0rem;
 }
 
+.course-participants-modal-button {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
 .course-participants-modal-body {
     padding: 0;
     padding-top: 0.5rem;
