@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { IUser } from '../../utils';
 import _ from 'lodash';
 import './css/UserTable.css';
+import { Button } from 'react-bootstrap';
 
 const usersPerPage = 5;
 
@@ -101,15 +102,15 @@ export function UserTable({ editClick, data }: IUserTableProps) {
       </table>
       <div className='d-flex w-100 justify-content-center align-items-center'>
         <span className='pagination-container d-flex align-items-center'>
-          <button className='pagination-btn' onClick={() => paginate(-1)}>
+          <Button className='pagination-btn' onClick={() => paginate(-1)}>
             {'<'}
-          </button>
+          </Button>
           <p className='mb-0 pagination-numbers'>{`${activePage + 1} (${
             paginatedData.length
           })`}</p>
-          <button className='pagination-btn' onClick={() => paginate(1)}>
+          <Button className='pagination-btn' onClick={() => paginate(1)}>
             {'>'}
-          </button>
+          </Button>
         </span>
       </div>
     </>

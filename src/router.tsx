@@ -16,6 +16,7 @@ export const router = createBrowserRouter(
         <Route element={<Home />} index />
         <Route path='/course/:courseId' element={<CourseDetail />} />
         <Route path='user-management' element={<UserManagement />} />
+        <Route path='user-management/:courseId' element={<UserManagement />} />
       </Route>
       <Route path='/login' element={<LoginPage />} />
     </>
