@@ -1,0 +1,45 @@
+.course-detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Use full container width */
+  margin-bottom: 20px;
+  margin-top: 35px;
+}
+
+.course-info, .participants {
+  flex-basis: 49%; /* Adjust the width of each panel to fill the space */
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+/* Buttons and Icons */
+.button, .btn {
+  background-color: #6247aa; /* Adjusted to match purple */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover, .btn:hover {
+  background-color: #513f98; /* Darker purple on hover */
+}
+
+.icon {
+  margin-right: 10px; /* Ensure proper spacing between icon and text */
+}

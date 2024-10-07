@@ -1,0 +1,65 @@
+.participants {
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f4f4f9;
+}
+
+.course-participants-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 6rem;
+}
+
+.course-participants-list > * {
+    margin: 0;
+    padding: 0.25rem;
+}
+
+.course-participants-modal {
+    display: 'flex';
+    align-items: 'center';
+    min-height: 'calc(100vh - 60px)';
+    border-radius: 1rem;
+    margin: 0rem;
+}
+
+.course-participants-modal-button {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.course-participants-modal-body {
+    padding: 0;
+    padding-top: 0.5rem;
+}
+
+.course-participants-modal-entry {
+    padding: 0.25rem;
+}
+
+.course-participants-modal-entry > * {
+    padding: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.25rem;
+    margin: 0;
+    margin-top: 0.25rem;
+}
+
+.course-participants-modal-second-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.course-participants-modal-second-row > * {
+    margin-bottom: 0.5rem;
+}
+
+.course-participants-modal-background-span {
+    background-color: var(--light-purple);
+}
