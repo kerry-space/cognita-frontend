@@ -59,12 +59,13 @@ export function CognitaProvider({
   };
 
   const handleActivityTypeChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    const { value } = event.target;
-    
+    const { value, options, selectedIndex } = event.target;
+    const selectedText = options[selectedIndex].text; 
+  
     if (currentActivity) {
       setCurrentActivity({
         ...currentActivity,
-        activityType: { id: parseInt(value, 10), title: event.target.options[event.target.selectedIndex].text },
+        activityType: { id: parseInt(value, 10), title: selectedText }, 
       });
     }
   };
@@ -137,14 +138,22 @@ export function CognitaProvider({
   );
   //PUT /api/activities/{id}
 
+  
 
-
-  const { requestFunc: updateActivity } = useFetchWithToken(`${BASE_URL}/activities/${currentActivity?.activityId}`, {
-    method: "PUT",
-    body: JSON.stringify({activityName: currentActivity?.activityName,description: currentActivity?.description,startDate: currentActivity?.startDate,endDate: currentActivity?.endDate,activityTypeId: currentActivity?.activityType.id}),
-    headers: { "Content-Type": "application/json" },
-  });
-
+  const { requestFunc: updateActivity } = useFetchWithToken(
+    `${BASE_URL}/activities/${currentActivity?.activityId}`, 
+    {
+      method: "PUT",
+      body: JSON.stringify({
+        activityName: currentActivity?.activityName,
+        description: currentActivity?.description,
+        startDate: currentActivity?.startDate,
+        endDate: currentActivity?.endDate,
+        activityTypeId: currentActivity?.activityType?.id, 
+      }),
+      headers: { "Content-Type": "application/json" },
+    }
+  );
   // Fetch courses asynchronously from an API
   const fetchCoursesAsync = async () => {
     try {

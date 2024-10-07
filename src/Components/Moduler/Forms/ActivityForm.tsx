@@ -4,7 +4,7 @@ import { IActivity } from "../../../Data/Interface";
 import { useCognitaFunc } from "../../../Hooks";
 
 export function ActivityForm({ activity }: { activity: IActivity | null }): React.ReactElement {
-  const { handleActivityChange,handleActivityTypeChange } = useCognitaFunc();
+  const { handleActivityChange, handleActivityTypeChange } = useCognitaFunc();
 
   if (!activity) {
     return <div>Loading...</div>; // Or some other fallback UI when activity is null
@@ -36,7 +36,7 @@ export function ActivityForm({ activity }: { activity: IActivity | null }): Reac
       <Form.Group className="mb-3">
         <Form.Label>Activity Type</Form.Label>
         <Form.Select
-          name="activityType"
+          name="activityTypeId"  // Change the name to match the payload structure
           value={activity.activityType?.id || 1} 
           onChange={handleActivityTypeChange}
         >
