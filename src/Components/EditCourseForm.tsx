@@ -20,9 +20,9 @@ export function EditCourseForm({ course }: IEditCourseFormProps) {
         <Form.Label>Course Name</Form.Label>
         <Form.Control
           type="text"
-          name="courseName"  // Make sure 'courseName' matches the key in the state
+          name="courseName" 
           value={course.courseName || ''}
-          onChange={handleInputChange}  // Use the central input change handler
+          onChange={handleInputChange}  
         />
       </Form.Group>
       <Form.Group className="mb-3">
