@@ -56,13 +56,7 @@
   }
 
 /* Main container styling */
-.course-detail-container {
-    display: flex;
-    flex-direction: row;  /* Change direction to row for side-by-side layout */
-    justify-content: space-between; /* Ensures spacing between the main areas */
-    padding: 20px;
-    gap: 20px;  /* Provides space between children */
-  }
+
   
   /* Styling for the main content area to align course info and participants side by side */
   .main-content {

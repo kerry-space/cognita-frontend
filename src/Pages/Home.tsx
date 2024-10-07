@@ -50,8 +50,8 @@ export function Home(): ReactElement {
           <p>No courses available.</p>
         )}
       </div>
-
-      {modalState.show && currentCourse && (
+ 
+      {modalState.show && (
         <GenericModal
           show={modalState.show}
           handleClose={closeModal}
